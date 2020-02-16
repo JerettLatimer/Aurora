@@ -11,7 +11,44 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Aurora</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="65" height="34" viewBox="0 0 65 34">
+                        <defs>
+                            <style>
+                                .cls-1, .cls-2 {
+                                    fill: #000;
+                                }
+
+                                .cls-1 {
+                                    font-size: 20px;
+                                    font-family: After Night;
+                                    letter-spacing: -0.003em;
+                                }
+
+                                .cls-2 {
+                                    font-size: 14px;
+                                    font-family: FunctionSmc-Regular, FunctionSmc;
+                                    letter-spacing: 0.06em;
+                                }
+
+                                .cls-3 {
+                                    fill: none;
+                                    stroke: #000;
+                                    stroke-width: 0.5px;
+                                }
+                            </style>
+                        </defs>
+                        <g id="logo" transform="translate(1)">
+                            <g id="Aurora_-_logo" data-name="Aurora - logo">
+                                <text id="Aurora" class="cls-1" transform="translate(31 20)"><tspan x="-31.237" y="0">Aurora</tspan></text>
+                            </g>
+                            <g id="Aurora_-_sub_logo" data-name="Aurora - sub logo" transform="translate(3.5 18)">
+                                <text id="gem_tool" data-name="gem tool" class="cls-2" transform="translate(28.5 13)"><tspan x="-27.685" y="0">gem tool</tspan></text>
+                                <line id="Line_1" data-name="Line 1" class="cls-3" x2="58" transform="translate(0 5.457)" />
+                            </g>
+                        </g>
+                    </svg>
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,7 +59,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Map">Live Map</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Task">Tasks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Group">Groups</a>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +80,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Aurora - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2020 - Northlight Services, LLC - <a asp-area="" asp-page="/About">About Aurora</a>
         </div>
     </footer>
 
