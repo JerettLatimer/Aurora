@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GEM.Parts
+namespace GEM.Model
 {
-	public class Mapper
+	public class Mailer
 	{
 	}
 }
