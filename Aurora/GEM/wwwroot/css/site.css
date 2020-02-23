@@ -72,10 +72,10 @@ body {
 
 @font-face {
     font-family: After Night;
-    src: url('../../wwwroot/resources/fonts/After Night.ttf');
+    src: url('../resources/fonts/After Night.ttf');
 }
 
 @font-face {
-    font-family: FunctionSmc-Regular, FunctionSmc;
-    src: url('../../wwwroot/resources/fonts/FunctionSmc Regular.ttf');
+    font-family: FunctionSmc;
+    src: url('../resources/fonts/FunctionSmc Regular.ttf');
 }
