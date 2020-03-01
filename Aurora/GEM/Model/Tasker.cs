@@ -7,5 +7,6 @@ namespace GEM.Model
 {
 	public class Tasker
 	{
+
 	}
 }
