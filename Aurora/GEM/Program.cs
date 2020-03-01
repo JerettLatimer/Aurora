@@ -14,8 +14,6 @@ namespace Aurora
     {
         public static void Main(string[] args)
         {
-            TaskModel taskModel = new TaskModel();
-            taskModel.fillList();
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -10,51 +10,46 @@ namespace GEM
 {
     public class TaskModel : PageModel
     {
-        // List property will be reference to Fetcher
+        // List property will be reference to Fetcher data property
         public List<List<string>> TestList { get; set; } = new List<List<string>>();
 
         internal void fillList()
         {
             for (int i = 0; i < 5; i++)
             {
-                TestList[i].Add("Header");
+                TestList.Add(new List<string>());
+                TestList.ElementAt(i).Add("HEADER");
                 for (int j = 0; j < 10; j++)
                 {
-                    TestList[i].Add("data");
+                    TestList.ElementAt(i).Add("data");
                 }
             }
-        }
-
-        /*
-         * For each column, inject html column with name value and keys below it.
-         * Do the same thing for each row.
-         */
-
-        public HtmlTag addTableHeader()
-        {
-            HtmlTag header = new HtmlTag("th");
-            header.Text("Here is a header");
-            return header;
-        }
-
-        public HtmlTag addTableRow()
-        {
-            HtmlTag row = new HtmlTag("tr");
-            return row;
         }
 
         public HtmlTag generateTable()
         {
-            HtmlTag table = new HtmlTag("tb");
+            this.fillList();
+            HtmlTag table = new HtmlTag("table");
+            HtmlTag headerRow = new HtmlTag("tr");
+            HtmlTag dataRow = new HtmlTag("tr");
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    table.Add("tr")
-                        .Add("th")
-                        .Text(TestList[i][j]);
+                    if(j == 0)
+                    {
+                        headerRow.Add("th")
+                            .Text(TestList.ElementAt(i).ElementAt(j));
+                    }
+                    else
+                    {
+                        dataRow.Add("td")
+                            .Text(TestList.ElementAt(i).ElementAt(j));
+                    }
                 }
             }
+            table.AppendHtml(headerRow.ToHtmlString());
+            table.AppendHtml(dataRow.ToHtmlString());
             return table;
         }
 
