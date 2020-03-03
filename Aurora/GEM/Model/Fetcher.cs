@@ -33,12 +33,15 @@ namespace GEM.Model
 
 		private void Connect()
 		{
-			var client = new MongoClient("mongodb://MattJett:<1234>@cluster0-shard-00-00-liruv.azure.mongodb.net:27017,cluster0-shard-00-01-liruv.azure.mongodb.net:27017,cluster0-shard-00-02-liruv.azure.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority");
+			// TODO: abstract out username and password and cluster name
+			var client = new MongoClient("mongodb+srv://MattJett:1234@cluster0-liruv.azure.mongodb.net/?retryWrites=true&w=majority");
 			var db = client.GetDatabase("test_cgr");
-			var collection = db.GetCollection<CGR>("test_monitor");
-			var filter = Builders<CGR>.Filter.Eq(u => u.status, "online");
-			var results = collection.Find(filter);
-			Console.WriteLine(results.ToString());
+			var collection = db.GetCollection<BsonDocument>("test_monitor");
+			var filter = Builders<BsonDocument>.Filter.Empty;
+			var result = collection.Find(filter).ToList();
+			foreach (var doc in result) {
+				Console.WriteLine(doc.ToJson());
+			}
 		}
 		#endregion
 	}
