@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GEM.Model;
 
 
 namespace Aurora
@@ -16,12 +17,19 @@ namespace Aurora
 	{
 		#region Properties
 		public IConfiguration Configuration { get; }
+		internal Fetcher Data { get; set; }
 		#endregion
 
 		#region Constructor
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
+
+
+			// not sure if best place to put Fetcher, maybe Pages/Index.cshtml.cs via OnGet() method
+			Data = Fetcher.Instance;
+			Data.Interval = 10;
+			
 		}
 		#endregion
 
