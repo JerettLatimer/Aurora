@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using Newtonsoft.Json.Linq;
+
 
 namespace GEM.Model
 {
@@ -13,6 +15,8 @@ namespace GEM.Model
 		#region Properties
 		public static Fetcher Instance { get; } = new Fetcher();
 		public int Interval { get; set; }
+		public List<Geodata> GeodataRouters { get; set; } = new List<Geodata>();
+		public List<string> JsonRouters { get; set; } = new List<string>();
 		#endregion
 
 		#region Constructors
@@ -36,12 +40,11 @@ namespace GEM.Model
 			// TODO: abstract out username and password and cluster name
 			var client = new MongoClient("mongodb+srv://Fetcher:GWZdFRSkqkys95wk@cluster0-liruv.azure.mongodb.net/?retryWrites=true&w=majority");
 			var db = client.GetDatabase("test_cgr");
-			var collection = db.GetCollection<BsonDocument>("test_monitor");
-			var filter = Builders<BsonDocument>.Filter.Empty;
-			var result = collection.Find(filter).ToList();
-			foreach (var doc in result) {
-				Console.WriteLine(doc.ToString());
-			}
+			var collection = db.GetCollection<Geodata>("test_monitor");
+			var toCSharpObject = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
+			var toJsonObject = collection.Find(new BsonDocument()).Project(Builders<Geodata>.Projection.Exclude("_id")).ToList();
+			toJsonObject.ForEach(result => JsonRouters.Add(result.ToJson().Replace("[", string.Empty).Replace("]", string.Empty).Replace("NumberDecimal(", string.Empty).Replace(")", string.Empty)));
+			toCSharpObject.ForEach(result => GeodataRouters.Add(result));
 		}
 		#endregion
 	}

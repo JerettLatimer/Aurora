@@ -9,7 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GEM.Model;
-
+using MongoDB.Bson;
+using MongoDB.Driver;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Aurora
 {
@@ -29,7 +32,21 @@ namespace Aurora
 			// not sure if best place to put Fetcher, maybe Pages/Index.cshtml.cs via OnGet() method
 			Data = Fetcher.Instance;
 			Data.Interval = 10;
-			
+
+			// Testing
+				
+				// Calling on Json string list, deserialize string into Geodata and finding properties though Geodata Object
+				var test_for_jsonGeodata = Data.JsonRouters;
+				var jsonGeodataList = new List<Geodata>();
+				foreach (var router in test_for_jsonGeodata) {
+					jsonGeodataList.Add(JsonConvert.DeserializeObject<Geodata>(router));
+				}
+				var expectingCorrdinates_fromJson = jsonGeodataList[0].coordinates.lat;
+
+				
+				// Calling on Geodata object list and finding properties through Geodata Object 
+				var test_for_geodata = Data.GeodataRouters;
+				var expectingCoordinates_fromObject = test_for_geodata[0].coordinates.lat;
 		}
 		#endregion
 
