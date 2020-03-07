@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HtmlTags;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 
 namespace GEM
 {
@@ -28,6 +29,7 @@ namespace GEM
 
         public HtmlTag generateTable()
         {
+            this.createJson();
             this.fillList();
             HtmlTag table = new HtmlTag("table");
             HtmlTag headerRow = new HtmlTag("tr");
@@ -36,7 +38,7 @@ namespace GEM
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if(j == 0)
+                    if (j == 0)
                     {
                         headerRow.Add("th")
                             .Text(TestList.ElementAt(i).ElementAt(j));
@@ -47,15 +49,39 @@ namespace GEM
                             .Text(TestList.ElementAt(i).ElementAt(j));
                     }
                 }
+                
             }
             table.AppendHtml(headerRow.ToHtmlString());
             table.AppendHtml(dataRow.ToHtmlString());
             return table;
         }
 
+        private void createJson()
+        {
+            TestJson testJson = new TestJson();
+            testJson.FirstName = "Jerett";
+            testJson.LastName = "Latimer";
+            testJson.StreetAddress = "209 Brown Rd E";
+            testJson.City = "Chehalis";
+            testJson.State = "WA";
+            testJson.Age = 23;
+
+            string json = JsonConvert.SerializeObject(testJson);
+        }
+
         public void OnGet()
         {
 
+        }
+
+        internal class TestJson
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string StreetAddress { get; set; }
+            public string City { get; set; }
+            public string State { get; set; }
+            public int Age { get; set; }
         }
     }
 }
