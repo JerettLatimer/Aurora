@@ -31,7 +31,15 @@ namespace GEM
                 HtmlTag row = new HtmlTag("tr");
                 row.Add("td").Text(router._id.ToString());
                 row.Add("td").Text(router.name);
-                row.Add("td").Text(router.status);
+                if(router.status.Equals("online"))
+                {
+                    row.Add("td").Text(router.status).Style("color", "green");
+                }
+                else if(router.status.Equals("offline"))
+                {
+                    row.Add("td").Text(router.status).Style("color", "red");
+
+                }
                 row.Add("td").Text(router.location.coordinates.latitude.ToString());
                 row.Add("td").Text(router.location.coordinates.longitude.ToString());
                 table.AppendHtml(row.ToHtmlString());
