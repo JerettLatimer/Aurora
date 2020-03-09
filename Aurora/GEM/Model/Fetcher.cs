@@ -16,16 +16,12 @@ namespace GEM.Model
 		#region Properties
 		public static Fetcher Instance { get; } = new Fetcher();
 		public Timer Interval { get; set; }
-		public Sites GeodataRouters { get; set; } = new Sites();
+		public Site Survey { get; set; } = new Site();
 		#endregion
 
 		#region Constructors
-		static Fetcher()
-		{
-		}
-		private Fetcher()
-		{
-		}
+		static Fetcher(){}
+		private Fetcher(){}
 		#endregion
 		#endregion
 
@@ -53,8 +49,7 @@ namespace GEM.Model
 
 		private void Query(IMongoCollection<Geodata> collection)
 		{
-			var toCSharpObject = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
-			GeodataRouters.sites = toCSharpObject;
+			Survey.Sites = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
 		}
 		#endregion
 	}

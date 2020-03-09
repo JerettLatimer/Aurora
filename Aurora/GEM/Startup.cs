@@ -41,12 +41,12 @@ namespace Aurora
 			/* REMOVE THIS BEFORE MERGE INTO STAGE */
 			////////// Unit Testing
 						// Calling on Json string list, deserialize string into Geodata and finding properties though Geodata Object
-						var jsonGeodataList = new List<Sites>();
+						var jsonGeodataList = new List<Site>();
 
 
 						// Calling on Geodata object list and finding properties through Geodata Object 
-						var test_for_geodata = Data.GeodataRouters;
-						var ListOfAllSites = test_for_geodata.sites;
+						var test_for_geodata = Data.Survey;
+						var ListOfAllSites = test_for_geodata.Sites;
 						var expectingCoordinates_byIndexOfObject = test_for_geodata["cgr1"].location.coordinates.latitude;
 		}
 		#endregion
