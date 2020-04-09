@@ -12,7 +12,7 @@ namespace GEM
 {
     public class TaskModel : PageModel
     {
-        private List<Geodata> Routers { get; } = Fetcher.Instance.GeodataRouters.sites;
+        private Site Routers { get; } = Fetcher.Instance.Survey;
         HtmlTag table, headerRow;
         public HtmlTag generateTable()
         {
@@ -26,7 +26,7 @@ namespace GEM
             headerRow.Add("th").Text("Longitude");
             table.AppendHtml(headerRow.ToHtmlString());
 
-            foreach (Geodata router in Routers)
+            foreach (Geodata router in Routers.Sites)
             {
                 HtmlTag row = new HtmlTag("tr");
                 row.Add("td").Text(router._id.ToString());
