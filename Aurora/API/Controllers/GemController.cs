@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GEM.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,36 +15,71 @@ namespace API.Controllers
     [ApiController]
     public class GemController : ControllerBase
     {
+        private readonly GeodataService _geodataService;
+
+        public GemController(GeodataService geodataService)
+        {
+            _geodataService = geodataService;
+        }
+
         // GET: api/Gem
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public ActionResult<List<Geodata>> Get() =>
+            _geodataService.Get();
 
         // GET: api/Gem/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public ActionResult<Geodata> Get(string id)
         {
-            return "value";
+            Geodata geodata = _geodataService.Get(id);
+
+            if (geodata == null)
+            {
+                return NotFound();
+            }
+
+            return geodata;
         }
 
         // POST: api/Gem
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Geodata> Post(Geodata geodata)
         {
+            _geodataService.Create(geodata);
+
+            return CreatedAtRoute("GetBook", new { id = geodata._id.ToString() }, geodata);
         }
 
         // PUT: api/Gem/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(string id, Geodata geodataIn)
         {
+            Geodata geodata = _geodataService.Get(id);
+
+            if (geodata == null)
+            {
+                return NotFound();
+            }
+
+            _geodataService.Update(id, geodataIn);
+
+            return NoContent();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            var geodata = _geodataService.Get(id);
+
+            if (geodata == null)
+            {
+                return NotFound();
+            }
+
+            _geodataService.Remove(geodata._id.ToString());
+
+            return NoContent();
         }
     }
 }

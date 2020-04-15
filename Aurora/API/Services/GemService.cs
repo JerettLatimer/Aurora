@@ -7,12 +7,44 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using Newtonsoft.Json.Linq;
 using System.Timers;
-
+using API.Models;
 
 namespace GEM.Model
 {
 	public sealed class GeodataService
 	{
+		private readonly IMongoCollection<Geodata> _geodata;
+
+		public GeodataService(IDatabaseSettings settings)
+		{
+			MongoClient client = new MongoClient(settings.ConnectionString);
+			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
+			_geodata = database.GetCollection<Geodata>(settings.CollectionName);
+		}
+
+		public List<Geodata> Get() => 
+			_geodata.Find(geodata => true).ToList();
+
+		public Geodata Get(string id) => 
+			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
+
+		public Geodata Create(Geodata geodata)
+		{
+			_geodata.InsertOne(geodata);
+			return geodata;
+		}
+
+		public void Update(string id, Geodata geodataIn) =>
+			_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
+
+		public void Remove(string id, Geodata geodataIn) =>
+			_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
+
+		public void Remove(string id) =>
+			_geodata.DeleteOne(geodata => geodata._id.Equals(id));
+
+
+
 		#region Singleton
 		#region Properties
 		public static GeodataService Instance { get; } = new GeodataService();
