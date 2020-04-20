@@ -28,7 +28,6 @@ signal.signal(signal.SIGTERM, term_handler)
 while True:
     collection.delete_one({"name": "rp1"})
     data["status"] = "online"
-    print(data)
     collection.insert_one(data)
     time.sleep(10)
 
