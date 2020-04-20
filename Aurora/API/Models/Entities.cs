@@ -7,12 +7,12 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 
 
-namespace GEM.Model
+namespace API.Models
 {
 	// double latitude = variableOfSiteObject["cgr1"].location.coordinates.latitude;
 	public class Site
 	{
-		public List<Geodata> Sites { get; internal set; }
+		public List<Geodata> Sites { get; set; }
 
 		public Geodata this[string siteName]
 		{

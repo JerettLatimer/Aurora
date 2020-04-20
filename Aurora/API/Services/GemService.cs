@@ -9,13 +9,13 @@ using Newtonsoft.Json.Linq;
 using System.Timers;
 using API.Models;
 
-namespace GEM.Model
+namespace API.Services
 {
-	public sealed class GeodataService
+	public class GemService
 	{
 		private readonly IMongoCollection<Geodata> _geodata;
 
-		public GeodataService(IDatabaseSettings settings)
+		public GemService(IDatabaseSettings settings)
 		{
 			MongoClient client = new MongoClient(settings.ConnectionString);
 			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
@@ -23,7 +23,7 @@ namespace GEM.Model
 		}
 
 		public List<Geodata> Get() => 
-			_geodata.Find(geodata => true).ToList();
+			_geodata.Find(geodata => false).ToList();
 
 		public Geodata Get(string id) => 
 			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
@@ -45,7 +45,7 @@ namespace GEM.Model
 
 
 
-		#region Singleton
+		/*#region Singleton
 		#region Properties
 		public static GeodataService Instance { get; } = new GeodataService();
 		public Timer Interval { get; set; }
@@ -84,96 +84,77 @@ namespace GEM.Model
 		{
 			Survey.Sites = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
 		}
-		#endregion
+		#endregion*/
 	}
 
 
 	public sealed class TasksService
 	{
-		#region Singleton
-		#region Properties
-		public static TasksService Instance { get; } = new TasksService();
-		public Timer Interval { get; set; }
-		public Site Survey { get; set; } = new Site();
-		#endregion
+		// TODO: This needs to be modified to fit specific tasks, right now it is the same code as the GeodataService
+		private readonly IMongoCollection<Geodata> _geodata;
 
-		#region Constructors
-		static TasksService() { }
-		private TasksService() { }
-		#endregion
-		#endregion
-
-		#region Methods
-		public void SetInterval(int fetchIntervalInSeconds)
+		public TasksService(IDatabaseSettings settings)
 		{
-			Interval = new Timer(fetchIntervalInSeconds * 1000);
+			MongoClient client = new MongoClient(settings.ConnectionString);
+			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
+			_geodata = database.GetCollection<Geodata>(settings.CollectionName);
 		}
 
-		public void Start()
+		public List<Geodata> Get() =>
+			_geodata.Find(geodata => true).ToList();
+
+		public Geodata Get(string id) =>
+			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
+
+		public Geodata Create(Geodata geodata)
 		{
-			Connect();
+			_geodata.InsertOne(geodata);
+			return geodata;
 		}
 
-		private void Connect()
-		{
-			// TODO: abstract out username and password and cluster name, maybe manifest.json <encrypted>
-			var client = new MongoClient("mongodb+srv://Fetcher:GWZdFRSkqkys95wk@cluster0-liruv.azure.mongodb.net/?retryWrites=true&w=majority");
-			var db = client.GetDatabase("test_cgr");
-			var collection = db.GetCollection<Geodata>("test_monitor");
+		public void Update(string id, Geodata geodataIn) =>
+			_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
 
-			// TODO: new Thread??? Forrest make a s=asynchyoncuisuasfdioh call in Time.Intervals of Interval Fetcher property.
-			Query(collection);
-		}
+		public void Remove(string id, Geodata geodataIn) =>
+			_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
 
-		private void Query(IMongoCollection<Geodata> collection)
-		{
-			Survey.Sites = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
-		}
-		#endregion
+		public void Remove(string id) =>
+			_geodata.DeleteOne(geodata => geodata._id.Equals(id));
 	}
 
 
 	public sealed class SubscriptionsService
 	{
-		#region Singleton
-		#region Properties
-		public static SubscriptionsService Instance { get; } = new SubscriptionsService();
-		public Timer Interval { get; set; }
-		public Site Survey { get; set; } = new Site();
-		#endregion
+		// TODO: This needs to be modified to fit specific subscriptions, right now it is the same code as the GeodataService
 
-		#region Constructors
-		static SubscriptionsService() { }
-		private SubscriptionsService() { }
-		#endregion
-		#endregion
+		private readonly IMongoCollection<Geodata> _geodata;
 
-		#region Methods
-		public void SetInterval(int fetchIntervalInSeconds)
+		public SubscriptionsService(IDatabaseSettings settings)
 		{
-			Interval = new Timer(fetchIntervalInSeconds * 1000);
+			MongoClient client = new MongoClient(settings.ConnectionString);
+			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
+			_geodata = database.GetCollection<Geodata>(settings.CollectionName);
 		}
 
-		public void Start()
+		public List<Geodata> Get() =>
+			_geodata.Find(geodata => true).ToList();
+
+		public Geodata Get(string id) =>
+			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
+
+		public Geodata Create(Geodata geodata)
 		{
-			Connect();
+			_geodata.InsertOne(geodata);
+			return geodata;
 		}
 
-		private void Connect()
-		{
-			// TODO: abstract out username and password and cluster name, maybe manifest.json <encrypted>
-			var client = new MongoClient("mongodb+srv://Fetcher:GWZdFRSkqkys95wk@cluster0-liruv.azure.mongodb.net/?retryWrites=true&w=majority");
-			var db = client.GetDatabase("test_cgr");
-			var collection = db.GetCollection<Geodata>("test_monitor");
+		public void Update(string id, Geodata geodataIn) =>
+			_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
 
-			// TODO: new Thread??? Forrest make a s=asynchyoncuisuasfdioh call in Time.Intervals of Interval Fetcher property.
-			Query(collection);
-		}
+		public void Remove(string id, Geodata geodataIn) =>
+			_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
 
-		private void Query(IMongoCollection<Geodata> collection)
-		{
-			Survey.Sites = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
-		}
-		#endregion
+		public void Remove(string id) =>
+			_geodata.DeleteOne(geodata => geodata._id.Equals(id));
 	}
 }

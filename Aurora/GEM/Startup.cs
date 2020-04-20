@@ -30,25 +30,24 @@ namespace Aurora
 		{
 			Configuration = configuration;
 
-
 			// TODO: not sure if best place to put Fetcher, maybe Pages/Index.cshtml.cs via OnGet() method?
 			// ultimatly, ensure that the Fetcher singleton instance can be accessed anywhere with only one creation!
-			Data = Fetcher.Instance;
-			Data.SetInterval(10);
-			Data.Start();
+			//Data = Fetcher.Instance;
+			//Data.SetInterval(10);
+			//Data.Start();
 
 
 
 			/* REMOVE THIS BEFORE MERGE INTO STAGE */
 			////////// Unit Testing
 						// Calling on Json string list, deserialize string into Geodata and finding properties though Geodata Object
-						var jsonGeodataList = new List<Site>();
+					//	var jsonGeodataList = new List<Site>();
 
 
 						// Calling on Geodata object list and finding properties through Geodata Object 
-						var test_for_geodata = Data.Survey;
-						var ListOfAllSites = test_for_geodata.Sites;
-						var expectingCoordinates_byIndexOfObject = test_for_geodata["cgr1"].location.coordinates.latitude;
+					//	var test_for_geodata = Data.Survey;
+					//	var ListOfAllSites = test_for_geodata.Sites;
+					//	var expectingCoordinates_byIndexOfObject = test_for_geodata["cgr1"].location.coordinates.latitude;
 		}
 		#endregion
 

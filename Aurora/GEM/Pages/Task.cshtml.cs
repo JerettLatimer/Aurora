@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Models;
 using GEM.Model;
 using HtmlTags;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,8 @@ namespace GEM
 {
     public class TaskModel : PageModel
     {
-        private Site Routers { get; } = Fetcher.Instance.Survey;
+        Fetcher fetcher = new Fetcher();
+        List<API.Models.Geodata> sites = Fetcher.GetGeodataListAsync().Result;
         HtmlTag table, headerRow;
         public HtmlTag generateTable()
         {
@@ -26,7 +28,7 @@ namespace GEM
             headerRow.Add("th").Text("Longitude");
             table.AppendHtml(headerRow.ToHtmlString());
 
-            foreach (Geodata router in Routers.Sites)
+            foreach (API.Models.Geodata router in sites)
             {
                 HtmlTag row = new HtmlTag("tr");
                 row.Add("td").Text(router._id.ToString());

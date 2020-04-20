@@ -7,12 +7,50 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using Newtonsoft.Json.Linq;
 using System.Timers;
+using API.Services;
+using API.Controllers;
+using API.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace GEM.Model
 {
-	public sealed class Fetcher
+	public class Fetcher
 	{
-		#region Singleton
+		public Fetcher()
+		{
+
+		}
+		//public Site Survey { get; set; } = new Site();
+		public API.Models.Site Survey { get; set; } = new API.Models.Site();
+		public GemController GemController { get; set; } = new GemController();
+
+		static HttpClient client = new HttpClient();
+
+		public static async Task RunAsync()
+		{
+			client.BaseAddress = new Uri("https://localhost:44337/");
+			client.DefaultRequestHeaders.Accept.Clear();
+			client.DefaultRequestHeaders.Accept.Add(
+				new MediaTypeWithQualityHeaderValue("application/json"));
+		}
+
+		public static async Task<List<Geodata>> GetGeodataListAsync()
+		{
+			await RunAsync();
+			List<Geodata> geodata = null;
+			string jsonReturn = "";
+			HttpResponseMessage response = await client.GetAsync("api/GemController");
+			if(response.IsSuccessStatusCode)
+			{
+				jsonReturn = await response.Content.ReadAsStringAsync();
+				geodata = JsonConvert.DeserializeObject<List<Geodata>>(jsonReturn);
+				return geodata;
+			}
+			return geodata;
+		}
+
+		/*#region Singleton
 		#region Properties
 		public static Fetcher Instance { get; } = new Fetcher();
 		public Timer Interval { get; set; }
@@ -51,6 +89,6 @@ namespace GEM.Model
 		{
 			Survey.Sites = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
 		}
-		#endregion
+		#endregion*/
 	}
 }
