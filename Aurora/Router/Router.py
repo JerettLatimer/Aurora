@@ -19,9 +19,9 @@ def term_handler(signal_num, stack_num):
     print("Signal Number: " + signal_num + "" + stack_num)
 
 
-client = pm.MongoClient("mongodb+srv://LunaLord:1234@cluster0-liruv.azure.mongodb.net/test?retryWrites=true&w=majority")
-db = client.test_cgr
-collection = db.test_monitor
+client = pm.MongoClient("mongodb+srv://Fetcher:nvZUzMHPqnpX50kj@aurora-pjpea.azure.mongodb.net/test?retryWrites=true&w=majority")
+db = client.GEM
+collection = db.Geodata
 
 signal.signal(signal.SIGTERM, term_handler)
 
