@@ -35,7 +35,7 @@ namespace API
 			services.AddSingleton<IDatabaseSettings>(sp =>
 				sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
-			services.AddSingleton<GeodataService>();
+			services.AddSingleton<GemService>();
 
 			services.AddControllers();
 		}

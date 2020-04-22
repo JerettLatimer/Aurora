@@ -42,8 +42,8 @@ namespace GEM
                     row.Add("td").Text(router.status).Style("color", "red");
 
                 }
-                row.Add("td").Text(router.location.coordinates.latitude.ToString());
-                row.Add("td").Text(router.location.coordinates.longitude.ToString());
+               // row.Add("td").Text(router.location.coordinates.latitude.ToString());
+               // row.Add("td").Text(router.location.coordinates.longitude.ToString());
                 table.AppendHtml(row.ToHtmlString());
             }
             return table;

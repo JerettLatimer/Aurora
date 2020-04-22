@@ -32,12 +32,12 @@ namespace API.Models
 	public class Location
 	{
 		public string type { get; internal set; }
-		public Coordinates coordinates { get; internal set; }
+		public double[] coordinates { get; internal set; }
 	}
 
-	public class Coordinates
+	/*public class Coordinates
 	{
 		public double longitude { get; internal set; }
 		public double latitude { get; internal set; }
-	}
+	}*/
 }

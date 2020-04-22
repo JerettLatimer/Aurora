@@ -23,7 +23,7 @@ namespace API.Services
 		}
 
 		public List<Geodata> Get() => 
-			_geodata.Find(geodata => false).ToList();
+			_geodata.Find(geodata => true).ToList();
 
 		public Geodata Get(string id) => 
 			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();

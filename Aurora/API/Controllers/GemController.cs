@@ -18,11 +18,6 @@ namespace API.Controllers
     [ApiController]
     public class GemController : ControllerBase
     {
-        public GemController()
-        {
-
-        }
-
         private readonly GemService _gemService;
 
         public GemController(GemService gemService)

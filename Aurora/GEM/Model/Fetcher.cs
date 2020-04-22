@@ -22,29 +22,26 @@ namespace GEM.Model
 
 		}
 		//public Site Survey { get; set; } = new Site();
-		public API.Models.Site Survey { get; set; } = new API.Models.Site();
-		public GemController GemController { get; set; } = new GemController();
+		public Site Survey { get; set; } = new Site();
 
 		static HttpClient client = new HttpClient();
 
 		public static async Task RunAsync()
 		{
-			client.BaseAddress = new Uri("https://localhost:44337/");
+			client.BaseAddress = new Uri("https://localhost:44353/");
 			client.DefaultRequestHeaders.Accept.Clear();
 			client.DefaultRequestHeaders.Accept.Add(
 				new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		public static async Task<List<Geodata>> GetGeodataListAsync()
+		public static async Task<List<API.Models.Geodata>> GetGeodataListAsync()
 		{
 			await RunAsync();
-			List<Geodata> geodata = null;
-			string jsonReturn = "";
-			HttpResponseMessage response = await client.GetAsync("api/GemController");
+			List<API.Models.Geodata> geodata = null;
+			HttpResponseMessage response = await client.GetAsync("api/Gem");
 			if(response.IsSuccessStatusCode)
 			{
-				jsonReturn = await response.Content.ReadAsStringAsync();
-				geodata = JsonConvert.DeserializeObject<List<Geodata>>(jsonReturn);
+				geodata = await response.Content.ReadAsAsync<List<API.Models.Geodata>>();
 				return geodata;
 			}
 			return geodata;
