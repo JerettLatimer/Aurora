@@ -13,8 +13,9 @@ namespace GEM
 {
     public class TaskModel : PageModel
     {
-        Fetcher fetcher = new Fetcher();
-        List<API.Models.Geodata> sites = Fetcher.GetGeodataListAsync().Result;
+        List<GEM.Model.Geodata> sites = Fetcher.GetGeodataListAsync().Result;
+        /*Fetcher fetcher = new Fetcher();
+        List<API.Models.Geodata> sites = Fetcher.GetGeodataListAsync().Result.ToList();
         HtmlTag table, headerRow;
         public HtmlTag generateTable()
         {
@@ -52,6 +53,6 @@ namespace GEM
         public void OnGet()
         {
 
-        }
+        }*/
     }
 }

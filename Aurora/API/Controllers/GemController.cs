@@ -27,8 +27,11 @@ namespace API.Controllers
 
         // GET: api/Gem
         [HttpGet]
-        public List<Geodata> Get() =>
-            _gemService.Get();
+        public ActionResult<List<Geodata>> Get()
+        {
+            var result = _gemService.Get();
+            return result;
+        }
 
         // GET: api/Gem/5
         [HttpGet("{id}", Name = "Get")]

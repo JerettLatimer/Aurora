@@ -22,11 +22,13 @@ namespace API.Services
 			_geodata = database.GetCollection<Geodata>(settings.CollectionName);
 		}
 
-		public List<Geodata> Get() => 
-			_geodata.Find(geodata => true).ToList();
-
-		public Geodata Get(string id) => 
-			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
+		public List<Geodata> Get()
+		{
+			var result = _geodata.Find(geodata => true).ToList();
+			return result;
+		}
+		public Geodata Get(string name) => 
+			_geodata.Find<Geodata>(geodata => geodata.name.Equals(name)).FirstOrDefault();
 
 		public Geodata Create(Geodata geodata)
 		{

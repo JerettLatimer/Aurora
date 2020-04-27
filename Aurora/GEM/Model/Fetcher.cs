@@ -12,6 +12,7 @@ using API.Controllers;
 using API.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
 
 namespace GEM.Model
 {
@@ -34,14 +35,15 @@ namespace GEM.Model
 				new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		public static async Task<List<API.Models.Geodata>> GetGeodataListAsync()
+		public static async Task<List<Geodata>> GetGeodataListAsync()
 		{
-			await RunAsync();
-			List<API.Models.Geodata> geodata = null;
+			/*await RunAsync();*/
+			client.BaseAddress = new Uri("https://localhost:44353/");
+			List<Geodata> geodata = null;
 			HttpResponseMessage response = await client.GetAsync("api/Gem");
 			if(response.IsSuccessStatusCode)
 			{
-				geodata = await response.Content.ReadAsAsync<List<API.Models.Geodata>>();
+				geodata = await response.Content.ReadAsAsync<List<Geodata>>();
 				return geodata;
 			}
 			return geodata;

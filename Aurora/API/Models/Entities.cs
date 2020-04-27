@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 
 namespace API.Models
@@ -23,10 +24,10 @@ namespace API.Models
 	public class Geodata
 	{
 		[BsonId]
-		public ObjectId _id { get; internal set; }
-		public string name { get; internal set; }
-		public string status { get; internal set; }
-		public Location location { get; internal set; }
+		public ObjectId _id { get; set; }
+		public string name { get; set; }
+		public string status { get; set; }
+		public Location location { get; set; }
 	}
 
 	public class Location
