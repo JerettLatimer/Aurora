@@ -32,13 +32,15 @@ namespace API.Models
 
 	public class Location
 	{
-		public string type { get; internal set; }
-		public double[] coordinates { get; internal set; }
+		public string type { get; set; }
+		public double[] coordinates { get; set; }
+		[BsonElement("coordinates")]
+		public Coordinates coordinatesObj { get; set; }
 	}
 
-	/*public class Coordinates
+	public class Coordinates
 	{
-		public double longitude { get; internal set; }
-		public double latitude { get; internal set; }
-	}*/
+		public double longitude { get; set; }
+		public double latitude { get; set; }
+	}
 }

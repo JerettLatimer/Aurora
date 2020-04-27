@@ -37,8 +37,7 @@ namespace GEM.Model
 
 		public static async Task<List<Geodata>> GetGeodataListAsync()
 		{
-			/*await RunAsync();*/
-			client.BaseAddress = new Uri("https://localhost:44353/");
+			await RunAsync();
 			List<Geodata> geodata = null;
 			HttpResponseMessage response = await client.GetAsync("api/Gem");
 			if(response.IsSuccessStatusCode)
