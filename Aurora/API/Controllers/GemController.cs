@@ -33,7 +33,7 @@ namespace API.Controllers
             return result;
         }
 
-        // GET: api/Gem/5
+        // GET: api/Gem/cgr3
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<Geodata> Get(string id)
         {
