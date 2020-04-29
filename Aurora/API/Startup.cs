@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
+using API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 
 namespace API
@@ -34,7 +36,10 @@ namespace API
 			services.AddSingleton<IDatabaseSettings>(sp =>
 				sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
-			services.AddControllers();
+			services.AddSingleton<GemService>();
+
+			services.AddControllers()
+				.AddNewtonsoftJson(options => options.UseMemberCasing());
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

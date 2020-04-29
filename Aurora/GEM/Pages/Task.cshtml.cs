@@ -12,7 +12,8 @@ namespace GEM
 {
     public class TaskModel : PageModel
     {
-        private Site Routers { get; } = Fetcher.Instance.Survey;
+        readonly Fetcher fetcher = new Fetcher();
+        List<Geodata> sites = Fetcher.GetGeodataListAsync().Result;
         HtmlTag table, headerRow;
         public HtmlTag generateTable()
         {
@@ -26,22 +27,22 @@ namespace GEM
             headerRow.Add("th").Text("Longitude");
             table.AppendHtml(headerRow.ToHtmlString());
 
-            foreach (Geodata router in Routers.Sites)
+            foreach (Geodata router in sites)
             {
                 HtmlTag row = new HtmlTag("tr");
                 row.Add("td").Text(router._id.ToString());
                 row.Add("td").Text(router.name);
-                if(router.status.Equals("online"))
+                if (router.status.Equals("online"))
                 {
                     row.Add("td").Text(router.status).Style("color", "green");
                 }
-                else if(router.status.Equals("offline"))
+                else if (router.status.Equals("offline"))
                 {
                     row.Add("td").Text(router.status).Style("color", "red");
 
                 }
-                row.Add("td").Text(router.location.coordinates.latitude.ToString());
-                row.Add("td").Text(router.location.coordinates.longitude.ToString());
+                row.Add("td").Text(router.location.coordinates[1].ToString());
+                row.Add("td").Text(router.location.coordinates[1].ToString());
                 table.AppendHtml(row.ToHtmlString());
             }
             return table;
