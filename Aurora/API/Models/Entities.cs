@@ -34,7 +34,7 @@ namespace API.Models
 	{
 		public string type { get; set; }
 		public double[] coordinates { get; set; }
-		[BsonElement("coordinates")]
+		//[BsonElement("coordinates")]
 		public Coordinates coordinatesObj { get; set; }
 	}
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Models;
 using GEM.Model;
 using HtmlTags;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +12,8 @@ namespace GEM
 {
     public class TaskModel : PageModel
     {
-        List<GEM.Model.Geodata> sites = Fetcher.GetGeodataListAsync().Result;
-        /*Fetcher fetcher = new Fetcher();
-        List<API.Models.Geodata> sites = Fetcher.GetGeodataListAsync().Result.ToList();
+        Fetcher fetcher = new Fetcher();
+        List<Geodata> sites = Fetcher.GetGeodataListAsync().Result;
         HtmlTag table, headerRow;
         public HtmlTag generateTable()
         {
@@ -29,22 +27,22 @@ namespace GEM
             headerRow.Add("th").Text("Longitude");
             table.AppendHtml(headerRow.ToHtmlString());
 
-            foreach (API.Models.Geodata router in sites)
+            foreach (Geodata router in sites)
             {
                 HtmlTag row = new HtmlTag("tr");
                 row.Add("td").Text(router._id.ToString());
                 row.Add("td").Text(router.name);
-                if(router.status.Equals("online"))
+                if (router.status.Equals("online"))
                 {
                     row.Add("td").Text(router.status).Style("color", "green");
                 }
-                else if(router.status.Equals("offline"))
+                else if (router.status.Equals("offline"))
                 {
                     row.Add("td").Text(router.status).Style("color", "red");
 
                 }
-               // row.Add("td").Text(router.location.coordinates.latitude.ToString());
-               // row.Add("td").Text(router.location.coordinates.longitude.ToString());
+                row.Add("td").Text(router.location.coordinates[1].ToString());
+                row.Add("td").Text(router.location.coordinates[1].ToString());
                 table.AppendHtml(row.ToHtmlString());
             }
             return table;
@@ -53,6 +51,6 @@ namespace GEM
         public void OnGet()
         {
 
-        }*/
+        }
     }
 }

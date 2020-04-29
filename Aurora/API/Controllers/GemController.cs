@@ -29,6 +29,7 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult<List<Geodata>> Get()
         {
+            
             var result = _gemService.Get();
             return result;
         }
