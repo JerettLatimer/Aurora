@@ -44,7 +44,7 @@ namespace GEM.Model
 				return Survey.Sites;
 			}
 			client.Dispose();
-			// Need to handle case where a valid response is not recieved.
+			// TODO: Need to handle case where a valid response is not recieved.
 			return Survey.Sites;
 		}
 	}

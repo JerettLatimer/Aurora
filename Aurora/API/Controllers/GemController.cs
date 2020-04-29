@@ -11,9 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    // TODO: Can we change name of this class and have three other classes similar to what we did in Services/GemService.cs
-    // TODO: Check SecretSanta project and see how it's WEB project got data from the API project
-
     [Route("api/[controller]")]
     [ApiController]
     public class GemController : ControllerBase

@@ -12,8 +12,8 @@ namespace GEM
 {
     public class TaskModel : PageModel
     {
-        Fetcher fetcher = new Fetcher();
-        List<Geodata> sites = Fetcher.GetGeodataListAsync().Result;
+        readonly Fetcher fetcher = new Fetcher();
+        readonly List<Geodata> sites = Fetcher.GetGeodataListAsync().Result;
         HtmlTag table, headerRow;
         public HtmlTag generateTable()
         {

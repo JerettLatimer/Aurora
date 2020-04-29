@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace API.Models
 {
-	// double latitude = variableOfSiteObject["cgr1"].location.coordinates.latitude;
 	public class Site
 	{
 		public List<Geodata> Sites { get; set; }
@@ -34,7 +33,6 @@ namespace API.Models
 	{
 		public string type { get; set; }
 		public double[] coordinates { get; set; }
-		//[BsonElement("coordinates")]
 		public Coordinates coordinatesObj { get; set; }
 	}
 
