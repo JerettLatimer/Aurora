@@ -24,10 +24,11 @@ namespace GEM.Model
 		}
 		public static Site Survey { get; set; } = new Site();
 
-		static HttpClient client = new HttpClient();
+		static HttpClient client;
 
 		public static async Task RunAsync()
 		{
+			client = new HttpClient();
 			client.BaseAddress = new Uri("https://localhost:44353/");
 			client.DefaultRequestHeaders.Accept.Clear();
 			client.DefaultRequestHeaders.Accept.Add(
