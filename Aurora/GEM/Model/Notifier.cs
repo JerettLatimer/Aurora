@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GEM.Model
 {
-	public class Mailer
+	public class Notifier
 	{
 	}
 }
