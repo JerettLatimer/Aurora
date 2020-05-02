@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
 
@@ -20,19 +21,26 @@ namespace GEM.Model
 
 	public class Geodata
 	{
-		//[BsonId]
-		//[BsonElement("_id")]
-		//[BsonRepresentation(BsonType.ObjectId)]
 		public string _id { get; set; }
 		public string name { get; set; }
 		public string status { get; set; }
 		public Location location { get; set; }
+		public DateTime lastModified { get; set; }
+		public int minutesOffline { get; set; }
 	}
 
 	public class Location
 	{
 		public string type { get; set; }
-		public double[] coordinates { get; set; }
+		//public double[] coordinates { get; set; }
+		[BsonElement("coordinates")]
+		public Coordinates coordinates { get; set; }
+	}
+
+	public class Coordinates
+	{
+		public double longitude { get; set; }
+		public double latitude { get; set; }
 	}
 
 

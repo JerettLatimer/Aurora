@@ -9,119 +9,132 @@ using Newtonsoft.Json.Linq;
 using System.Timers;
 using API.Models;
 
+
 namespace API.Services
 {
 	public class GemService
 	{
-		private readonly IMongoCollection<Geodata> _geodata;
+		private readonly IMongoCollection<Geodata> _rawGeodata;
 
 		public GemService(IDatabaseSettings settings)
 		{
-			MongoClient client = new MongoClient(settings.ConnectionString);
+			var client = new MongoClient(settings.ConnectionString);
 			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
-			_geodata = database.GetCollection<Geodata>(settings.CollectionName);
+			_rawGeodata = database.GetCollection<Geodata>(settings.Geodata_CollectionName);
 		}
 
-		public List<Geodata> Get()
+		public async Task<List<Geodata>> Get()
 		{
-			var result = _geodata.Find(geodata => true).ToList();
-			return result;
+			var results = await PipelineDefinitionBuilder(_rawGeodata);
+			//var data = results.Find<Geodata>(geodata => true).ToList();
+			return results;
 		}
-		public Geodata Get(string name) => 
-			_geodata.Find<Geodata>(geodata => geodata.name.Equals(name)).FirstOrDefault();
-
-		public Geodata Create(Geodata geodata)
+		public async Task<Geodata> Get(string filterByName)
 		{
-			_geodata.InsertOne(geodata);
-			return geodata;
+			var results = await PipelineDefinitionBuilder(_rawGeodata);
+			//_aggregatedGeodata.Find<Geodata>(geodata => geodata.name.Equals(name)).FirstOrDefault();
+			return results.Find(geodata => geodata.name.Equals(filterByName));
+
 		}
 
-		public void Update(string id, Geodata geodataIn) =>
-			_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
 
-		public void Remove(string id, Geodata geodataIn) =>
-			_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
+		#region Private Methods
+		private async Task<List<Geodata>> PipelineDefinitionBuilder(IMongoCollection<Geodata> collection)
+		{
+			#region Aggregation Pipeline
+			PipelineDefinition<Geodata, Geodata> pipeline = new BsonDocument[] {
 
-		public void Remove(string id) =>
-			_geodata.DeleteOne(geodata => geodata._id.Equals(id));
+				new BsonDocument("$addFields", new BsonDocument("lastModified", new DateTime(2020, 4, 29, 7, 0, 0))),
 
+				new BsonDocument("$addFields",
+					new BsonDocument("minutesOffline",
+						new BsonDocument("$cond",
+							new BsonArray {
+								new BsonDocument("$and",
+								new BsonArray {
+									new BsonDocument("$lt", new BsonArray { "$lastModified", "$$NOW" }),
+									new BsonDocument("$eq", new BsonArray { "$status", "offline" })
+								}),
+								new BsonDocument("$trunc", new BsonDocument("$divide", new BsonArray { new BsonDocument("$subtract", new BsonArray { "$$NOW", "$lastModified" }), 60000 })),
+								new BsonDocument("$add", new BsonArray { 0, 0 })
+							}
+						)
+					)
+				),
 
+				new BsonDocument("$project",
+					new BsonDocument
+					{
+						{ "name", "$name" },
+						{ "status", "$status" },
+						{ "lastModified", "$lastModified" },
+						{ "minutesOffline", "$minutesOffline" },
+						{ "type", "Point" },
+						{ "longitude",
+							new BsonDocument("$arrayElemAt", new BsonArray { "$location.coordinates", 0 })
+						},
+						{ "latitude",
+							new BsonDocument("$arrayElemAt", new BsonArray { "$location.coordinates", 1 })
+						}
+					}
+				),
 
-		/*#region Singleton
-		#region Properties
-		public static GeodataService Instance { get; } = new GeodataService();
-		public Timer Interval { get; set; }
-		public Site Survey { get; set; } = new Site();
+				new BsonDocument("$project",
+					new BsonDocument
+					{
+						{ "name", "$name" },
+						{ "status", "$status" },
+						{ "lastModified", "$lastModified" },
+						{ "minutesOffline", "$minutesOffline" },
+						{ "location.type", "$type" },
+						{ "location.coordinates", new BsonDocument { { "longitude", "$longitude" }, { "latitude", "$latitude" } } }
+					}
+				),
+
+				new BsonDocument("$sort", new BsonDocument("status", 1))
+			};
+			#endregion
+
+			// TODO: Don't need following fields in GEM app: id, minutesOffline, longitude, latitude. Filter fields out.
+			var aggregation = collection.Aggregate(pipeline);
+			return await aggregation.ToListAsync();
+		}
 		#endregion
-
-		#region Constructors
-		static GeodataService(){}
-		private GeodataService(){}
-		#endregion
-		#endregion
-
-		#region Methods
-		public void SetInterval(int fetchIntervalInSeconds)
-		{
-			Interval = new Timer(fetchIntervalInSeconds * 1000);
-		}
-
-		public void Start()
-		{
-			Connect();
-		}
-
-		private void Connect()
-		{
-			// TODO: abstract out username and password and cluster name, maybe manifest.json <encrypted>
-			var client = new MongoClient("mongodb+srv://Fetcher:GWZdFRSkqkys95wk@cluster0-liruv.azure.mongodb.net/?retryWrites=true&w=majority");
-			var db = client.GetDatabase("test_cgr");
-			var collection = db.GetCollection<Geodata>("test_monitor");
-
-			// TODO: new Thread??? Forrest make a s=asynchyoncuisuasfdioh call in Time.Intervals of Interval Fetcher property.
-			Query(collection);
-		}
-
-		private void Query(IMongoCollection<Geodata> collection)
-		{
-			Survey.Sites = collection.Find(Builders<Geodata>.Filter.Empty).ToList();
-		}
-		#endregion*/
 	}
 
 
 	public sealed class TasksService
 	{
 		// TODO: This needs to be modified to fit specific tasks, right now it is the same code as the GeodataService
-		private readonly IMongoCollection<Geodata> _geodata;
+		//private readonly IMongoCollection<Geodata> _geodata;
 
-		public TasksService(IDatabaseSettings settings)
-		{
-			MongoClient client = new MongoClient(settings.ConnectionString);
-			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
-			_geodata = database.GetCollection<Geodata>(settings.CollectionName);
-		}
+		//public TasksService(IDatabaseSettings settings)
+		//{
+		//	MongoClient client = new MongoClient(settings.ConnectionString);
+		//	IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
+		//	_geodata = database.GetCollection<Geodata>(settings.CollectionName);
+		//}
 
-		public List<Geodata> Get() =>
-			_geodata.Find(geodata => true).ToList();
+		//public List<Geodata> Get() =>
+		//	_geodata.Find(geodata => true).ToList();
 
-		public Geodata Get(string id) =>
-			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
+		//public Geodata Get(string id) =>
+		//	_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
 
-		public Geodata Create(Geodata geodata)
-		{
-			_geodata.InsertOne(geodata);
-			return geodata;
-		}
+		//public Geodata Create(Geodata geodata)
+		//{
+		//	_geodata.InsertOne(geodata);
+		//	return geodata;
+		//}
 
-		public void Update(string id, Geodata geodataIn) =>
-			_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
+		//public void Update(string id, Geodata geodataIn) =>
+		//	_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
 
-		public void Remove(string id, Geodata geodataIn) =>
-			_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
+		//public void Remove(string id, Geodata geodataIn) =>
+		//	_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
 
-		public void Remove(string id) =>
-			_geodata.DeleteOne(geodata => geodata._id.Equals(id));
+		//public void Remove(string id) =>
+		//	_geodata.DeleteOne(geodata => geodata._id.Equals(id));
 	}
 
 
@@ -129,34 +142,34 @@ namespace API.Services
 	{
 		// TODO: This needs to be modified to fit specific subscriptions, right now it is the same code as the GeodataService
 
-		private readonly IMongoCollection<Geodata> _geodata;
+		//private readonly IMongoCollection<Geodata> _geodata;
 
-		public SubscriptionsService(IDatabaseSettings settings)
-		{
-			MongoClient client = new MongoClient(settings.ConnectionString);
-			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
-			_geodata = database.GetCollection<Geodata>(settings.CollectionName);
-		}
+		//public SubscriptionsService(IDatabaseSettings settings)
+		//{
+		//	MongoClient client = new MongoClient(settings.ConnectionString);
+		//	IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
+		//	_geodata = database.GetCollection<Geodata>(settings.CollectionName);
+		//}
 
-		public List<Geodata> Get() =>
-			_geodata.Find(geodata => true).ToList();
+		//public List<Geodata> Get() =>
+		//	_geodata.Find(geodata => true).ToList();
 
-		public Geodata Get(string id) =>
-			_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
+		//public Geodata Get(string id) =>
+		//	_geodata.Find<Geodata>(geodata => geodata._id.Equals(id)).FirstOrDefault();
 
-		public Geodata Create(Geodata geodata)
-		{
-			_geodata.InsertOne(geodata);
-			return geodata;
-		}
+		//public Geodata Create(Geodata geodata)
+		//{
+		//	_geodata.InsertOne(geodata);
+		//	return geodata;
+		//}
 
-		public void Update(string id, Geodata geodataIn) =>
-			_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
+		//public void Update(string id, Geodata geodataIn) =>
+		//	_geodata.ReplaceOne<Geodata>(geodata => geodata._id.Equals(id), geodataIn);
 
-		public void Remove(string id, Geodata geodataIn) =>
-			_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
+		//public void Remove(string id, Geodata geodataIn) =>
+		//	_geodata.DeleteOne(geodata => geodata._id.Equals(geodataIn._id));
 
-		public void Remove(string id) =>
-			_geodata.DeleteOne(geodata => geodata._id.Equals(id));
+		//public void Remove(string id) =>
+		//	_geodata.DeleteOne(geodata => geodata._id.Equals(id));
 	}
 }
