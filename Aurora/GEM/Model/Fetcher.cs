@@ -21,8 +21,7 @@ namespace GEM.Model
 		public Fetcher()
 		{
 
-		}
-		public static Site Survey { get; set; } = new Site();
+		public Site Survey { get; set; } = new Site();
 
 		static HttpClient client;
 
