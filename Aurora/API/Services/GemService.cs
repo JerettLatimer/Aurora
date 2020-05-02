@@ -26,15 +26,12 @@ namespace API.Services
 		public async Task<List<Geodata>> Get()
 		{
 			var results = await PipelineDefinitionBuilder(_rawGeodata);
-			//var data = results.Find<Geodata>(geodata => true).ToList();
 			return results;
 		}
 		public async Task<Geodata> Get(string filterByName)
 		{
 			var results = await PipelineDefinitionBuilder(_rawGeodata);
-			//_aggregatedGeodata.Find<Geodata>(geodata => geodata.name.Equals(name)).FirstOrDefault();
 			return results.Find(geodata => geodata.name.Equals(filterByName));
-
 		}
 
 

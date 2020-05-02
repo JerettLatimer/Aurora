@@ -18,34 +18,34 @@ namespace GEM.Model
 {
 	public class Fetcher
 	{
-		public Fetcher()
-		{
+		static HttpClient _client;
 
-		public Site Survey { get; set; } = new Site();
+		public static Site Survey { get; set; } = new Site();
 
-		static HttpClient client;
-
+		
 		public static async Task RunAsync()
 		{
-			client = new HttpClient();
-			client.BaseAddress = new Uri("https://localhost:44353/");
-			client.DefaultRequestHeaders.Accept.Clear();
-			client.DefaultRequestHeaders.Accept.Add(
+			_client = new HttpClient {
+				BaseAddress = new Uri("https://localhost:44353/")
+			};
+			_client.DefaultRequestHeaders.Accept.Clear();
+			_client.DefaultRequestHeaders.Accept.Add(
 				new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
-		public static async Task<List<Geodata>> GetGeodataListAsync()
+		public static async Task<Site> GetGeodataListAsync()
 		{
 			await RunAsync();
-			HttpResponseMessage response = await client.GetAsync("api/Gem");
-			if(response.IsSuccessStatusCode)
-			{
+			HttpResponseMessage response = await _client.GetAsync("api/Gem");
+
+			// 200
+			if (response.IsSuccessStatusCode) {
 				Survey.Sites = await response.Content.ReadAsAsync<List<Geodata>>();
-				return Survey.Sites;
+				return Survey;
 			}
-			client.Dispose();
+			_client.Dispose();
 			// TODO: Need to handle case where a valid response is not recieved.
-			return Survey.Sites;
+			return Survey;
 		}
 	}
 }

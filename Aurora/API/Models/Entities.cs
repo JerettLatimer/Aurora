@@ -17,10 +17,7 @@ namespace API.Models
 	{
 		public List<Geodata> Sites { get; set; }
 
-		public Geodata this[string siteName]
-		{
-			get => Sites.Find(geodata => siteName == geodata.name);
-		}
+		public Geodata this[string siteName] => Sites.Find(geodata => siteName == geodata.name);
 	}
 
 	public class Geodata
@@ -37,8 +34,6 @@ namespace API.Models
 	public class Location
 	{
 		public string type { get; set; }
-		//public double[] coordinates { get; set; }
-		[BsonElement("coordinates")]
 		public Coordinates coordinates { get; set; }
 	}
 

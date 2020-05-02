@@ -10,72 +10,78 @@ using MongoDB.Driver;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class GemController : ControllerBase
-    {
-        private readonly GemService _gemService;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class GemController : ControllerBase
+	{
+		#region Header
+		private readonly GemService _gemService;
 
-        public GemController(GemService gemService)
-        {
-            _gemService = gemService;
-        }
+		public GemController(GemService gemService)
+		{
+			_gemService = gemService;
+		}
+		#endregion
 
-        // GET: api/Gem
-        [HttpGet]
-        public ActionResult<List<Geodata>> Get() 
-        {
-            var result = _gemService.Get().Result;
-            return result;
-        }
 
-        // GET: api/Gem/cgr3
-        [HttpGet("{name}", Name = "Get")]
-        public ActionResult<Geodata> Get(string name)
-        {
-            Geodata geodata = _gemService.Get(name).Result;
-            return (geodata != null) ? (ActionResult<Geodata>)geodata : NotFound();
-        }
+		#region API Calls
+		// GET: api/Gem
+		[HttpGet]
+		public ActionResult<List<Geodata>> Get() 
+		{
+			var result = _gemService.Get().Result;
+			return result;
+		}
 
-        //// POST: api/Gem
-        //[HttpPost]
-        //public ActionResult<Geodata> Post(Geodata geodata)
-        //{
-        //    _gemService.Create(geodata);
+		// GET: api/Gem/cgr3
+		[HttpGet("{name}", Name = "Get")]
+		public ActionResult<Geodata> Get(string name)
+		{
+			Geodata geodata = _gemService.Get(name).Result;
+			return (geodata != null) ? (ActionResult<Geodata>)geodata : NotFound();
+		}
 
-        //    return CreatedAtRoute("GetBook", new { id = geodata._id.ToString() }, geodata);
-        //}
 
-        //// PUT: api/Gem/5
-        //[HttpPut("{id}")]
-        //public IActionResult Put(string id, Geodata geodataIn)
-        //{
-        //    Geodata geodata = _gemService.Get(id);
+		//// POST: api/Gem
+		//[HttpPost]
+		//public ActionResult<Geodata> Post(Geodata geodata)
+		//{
+		//    _gemService.Create(geodata);
 
-        //    if (geodata == null)
-        //    {
-        //        return NotFound();
-        //    }
+		//    return CreatedAtRoute("GetBook", new { id = geodata._id.ToString() }, geodata);
+		//}
 
-        //    _gemService.Update(id, geodataIn);
+		//// PUT: api/Gem/5
+		//[HttpPut("{id}")]
+		//public IActionResult Put(string id, Geodata geodataIn)
+		//{
+		//    Geodata geodata = _gemService.Get(id);
 
-        //    return NoContent();
-        //}
+		//    if (geodata == null)
+		//    {
+		//        return NotFound();
+		//    }
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete(string id)
-        //{
-        //    var geodata = _gemService.Get(id);
+		//    _gemService.Update(id, geodataIn);
 
-        //    if (geodata == null)
-        //    {
-        //        return NotFound();
-        //    }
+		//    return NoContent();
+		//}
 
-        //    _gemService.Remove(geodata._id.ToString());
+		//// DELETE: api/ApiWithActions/5
+		//[HttpDelete("{id}")]
+		//public IActionResult Delete(string id)
+		//{
+		//    var geodata = _gemService.Get(id);
 
-        //    return NoContent();
-        //}
-    }
+		//    if (geodata == null)
+		//    {
+		//        return NotFound();
+		//    }
+
+		//    _gemService.Remove(geodata._id.ToString());
+
+		//    return NoContent();
+		//}
+		#endregion
+	}
 }

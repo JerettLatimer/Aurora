@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
 
 
 namespace GEM.Model
@@ -13,10 +11,7 @@ namespace GEM.Model
 	{
 		public List<Geodata> Sites { get; set; }
 
-		public Geodata this[string siteName]
-		{
-			get => Sites.Find(geodata => siteName == geodata.name);
-		}
+		public Geodata this[string siteName] => Sites.Find(geodata => siteName == geodata.name);
 	}
 
 	public class Geodata
@@ -32,8 +27,6 @@ namespace GEM.Model
 	public class Location
 	{
 		public string type { get; set; }
-		//public double[] coordinates { get; set; }
-		[BsonElement("coordinates")]
 		public Coordinates coordinates { get; set; }
 	}
 
