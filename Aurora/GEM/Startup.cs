@@ -29,6 +29,7 @@ namespace Aurora
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
+			
 		}
 		#endregion
 
