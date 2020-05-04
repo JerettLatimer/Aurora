@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using GEM;
+using GEM.Model;
 
 namespace Aurora
 {
@@ -14,6 +15,7 @@ namespace Aurora
     {
         public static void Main(string[] args)
         {
+            //Notifier.SendNotification(); allows notifier to be called
             CreateHostBuilder(args).Build().Run();
         }
 
