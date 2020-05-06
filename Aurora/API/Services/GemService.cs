@@ -12,7 +12,7 @@ using API.Models;
 
 namespace API.Services
 {
-	public class GemService
+	public class GemService : IGemService
 	{
 		private readonly IMongoCollection<Geodata> _rawGeodata;
 

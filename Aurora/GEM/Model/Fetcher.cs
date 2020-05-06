@@ -38,15 +38,18 @@ namespace GEM.Model
 		{
 			await RunAsync();
 			HttpResponseMessage response = await _client.GetAsync("api/Gem");
+			_client.Dispose();
 
 			// 200
 			if (response.IsSuccessStatusCode) {
 				Survey.Sites = await response.Content.ReadAsAsync<List<Geodata>>();
 				return Survey;
 			}
-			_client.Dispose();
-			// TODO: Need to handle case where a valid response is not recieved.
-			return Survey;
+			else
+			{
+				// TODO: Need to handle case where a valid response is not recieved.
+				throw new HttpRequestException("404 Error Occurred");
+			}
 		}
 	}
 }

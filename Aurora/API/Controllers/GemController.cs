@@ -15,9 +15,9 @@ namespace API.Controllers
 	public class GemController : ControllerBase
 	{
 		#region Header
-		private readonly GemService _gemService;
+		private readonly IGemService _gemService;
 
-		public GemController(GemService gemService)
+		public GemController(IGemService gemService)
 		{
 			_gemService = gemService;
 		}
