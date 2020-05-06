@@ -22,8 +22,10 @@ namespace GEM.Model
 
 		public static Site Survey { get; set; } = new Site();
 
-		
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously	Justification: Method is called with await operator in an async method. It will not run synchronously.
 		public static async Task RunAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 		{
 			_client = new HttpClient {
 				//BaseAddress = new Uri("https://localhost:44353/")
