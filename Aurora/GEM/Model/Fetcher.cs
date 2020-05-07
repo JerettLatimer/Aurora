@@ -6,13 +6,13 @@ using Newtonsoft.Json;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using Newtonsoft.Json.Linq;
-using System.Timers;
 using API.Services;
 using API.Controllers;
 using API.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Formatting;
+
 
 namespace GEM.Model
 {
@@ -22,10 +22,7 @@ namespace GEM.Model
 
 		public static Site Survey { get; set; } = new Site();
 
-
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously	Justification: Method is called with await operator in an async method. It will not run synchronously.
-		public static async Task RunAsync()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+		public static void RunAsync()
 		{
 			_client = new HttpClient {
 				//BaseAddress = new Uri("https://localhost:44353/")
@@ -38,7 +35,7 @@ namespace GEM.Model
 
 		public static async Task<Site> GetGeodataListAsync()
 		{
-			await RunAsync();
+			RunAsync();
 			HttpResponseMessage response = await _client.GetAsync("api/Gem");
 			_client.Dispose();
 

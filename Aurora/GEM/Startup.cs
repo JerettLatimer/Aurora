@@ -20,35 +20,45 @@ namespace Aurora
 {
 	public class Startup
 	{
+		#region Fields
+		readonly Site _survey = Fetcher.GetGeodataListAsync().Result;
+		#endregion
+
 		#region Properties
 		public IConfiguration Configuration { get; }
-		internal Fetcher Data { get; set; }
 		#endregion
 
 		#region Constructor
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
-			
+
+			/* DEMO ONLY: Starts the demo */
+			LaunchMockScenario();
+			/**/
 		}
 		#endregion
 
+
 		#region Methods
-		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
+		/* DEMO ONLY */
+		private void LaunchMockScenario()
 		{
-			services.AddRazorPages();
+			// TODO: steps to create 3 Subscription Profiles (Manager, Technician, Analyst), 1 Task (DemoTask), 1 Fetcher at startup so that Fetcher
 		}
+		/**/
+
+
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services) => services.AddRazorPages();
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsDevelopment())
-			{
+			if (env.IsDevelopment()) {
 				app.UseDeveloperExceptionPage();
 			}
-			else
-			{
+			else {
 				app.UseExceptionHandler("/Error");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
@@ -56,15 +66,9 @@ namespace Aurora
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-
 			app.UseRouting();
-
 			app.UseAuthorization();
-
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapRazorPages();
-			});
+			app.UseEndpoints(endpoints => {	endpoints.MapRazorPages(); });
 		}
 		#endregion
 
