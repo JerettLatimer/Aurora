@@ -5,17 +5,18 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Test
 {
-    [TestClass]
-    public class GemTests
-    {
-        static HttpClient _client;
+	[TestClass]
+	public class GemTests
+	{
+		static HttpClient _client;
 
-        [TestMethod]
-        public async Task Get_HttpClientRequest_ReturnsSuccessCode()
-        {
+		[TestMethod]
+		public async Task Get_HttpClientRequest_ReturnsSuccessCode()
+		{
 			// Arrange
 
 			// Act
@@ -23,7 +24,7 @@ namespace Test
 
 			// Assert
 			Assert.IsTrue(response.IsSuccessStatusCode);
-        }
+		}
 
 		[TestMethod]
 		public async Task Get_HttpClientRequest_ReturnsListOfGeodata()

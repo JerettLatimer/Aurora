@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace GEM
 {
-    public class TaskModel : PageModel
+    public class TasksPageModel : PageModel
     {
         readonly Site _survey = Fetcher.GetGeodataListAsync().Result;
         HtmlTag _table, _headerRow;
