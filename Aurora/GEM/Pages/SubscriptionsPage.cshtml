@@ -7,3 +7,138 @@
 <h1 class="display-4">Subscriptions</h1>
 <p>You can subscribe to a selected <em>Subscription</em> profile here, receiving only alerts you care about.</p>
 <p>Here admins can fully manage all the <em>Subscriptions</em>.</p>
+
+<form class="form-inline" id="subscription">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" placeholder="Enter first name" name="firstName" />
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" placeholder="Enter last name" name="lastName" />
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Enter email" name="email" />
+    <div class="dropdown">
+        <button class="dropbtn">
+            Select Group
+            <p class="d-inline"> <i class="arrow down"></i></p>
+        </button>
+        <div class="dropdown-content">
+            <label for="manager">
+                <input name="managerChoice" id="manager" type="checkbox" value="Manager" />
+                Manager
+            </label>
+            <label for="analyst">
+                <input name="analystChoice" id="analyst" type="checkbox" value="Analyst" />
+                Analyst
+            </label>
+            <label for="technician">
+                <input name="technicianChoice" id="technician" type="checkbox" value="Technician" />
+                Technician
+            </label>
+        </div>
+    </div>
+    <button id="submit" type="submit">Submit</button>
+</form>
+
+<style>
+
+    /* DROPDOWN STYLING STARTS HERE ----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    /* Dropdown Button */
+    .dropbtn {
+        background-color: red;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px 10px 5px 0;
+    }
+
+    .arrow {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+    }
+
+    .down {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Inside the dropdown */
+        .dropdown-content label input {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content label:hover {
+            background-color: #ddd;
+        }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: lightcoral;
+    }
+
+
+    /* FORM STYLING STARTS HERE ---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    /* Style the form - display items horizontally */
+    .form-inline {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+    }
+
+        /* Add some margins for each label */
+        .form-inline label {
+            margin: 5px 10px 5px 0;
+        }
+
+        /* Style the input fields */
+        .form-inline input {
+            vertical-align: middle;
+            margin: 5px 10px 5px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+    /* Style the submit button */
+
+
+    #submit {
+        padding: 10px 20px;
+        background-color: dodgerblue;
+        border: 1px solid #ddd;
+        color: white;
+    }
+
+    #submit {
+        background-color: royalblue;
+    }
+</style>
