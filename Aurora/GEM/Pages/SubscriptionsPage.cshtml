@@ -9,14 +9,17 @@
 <p>Here admins can fully manage all the <em>Subscriptions</em>.</p>
 
 <form class="form-inline" id="subscription">
-    <label for="firstName">First Name</label>
+    <label for="firstName">First Name:</label>
     <input type="text" id="firstName" placeholder="Enter first name" name="firstName" />
-    <label for="lastName">Last Name</label>
+    <label for="lastName">Last Name:</label>
     <input type="text" id="lastName" placeholder="Enter last name" name="lastName" />
-    <label for="email">Email</label>
+    <label for="email">Email:</label>
     <input type="email" id="email" placeholder="Enter email" name="email" />
     <div class="dropdown">
-        <button class="dropbtn">Dropdown</button>
+        <button class="dropbtn">
+            Select Group
+            <p class="d-inline"> <i class="arrow down"></i></p>
+        </button>
         <div class="dropdown-content">
             <label for="manager">
                 <input name="managerChoice" id="manager" type="checkbox" value="Manager" />
@@ -32,49 +35,110 @@
             </label>
         </div>
     </div>
-    <button type="submit">Submit</button>
+    <button id="submit" type="submit">Submit</button>
 </form>
 
 <style>
+
+    /* DROPDOWN STYLING STARTS HERE ----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
     /* Dropdown Button */
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
+    .dropbtn {
+        background-color: red;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px 10px 5px 0;
+    }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+    .arrow {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+    }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: fixed; 
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
+    .down {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
 
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+        /* Inside the dropdown */
+        .dropdown-content label input {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+        /* Change color of dropdown links on hover */
+        .dropdown-content label:hover {
+            background-color: #ddd;
+        }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: lightcoral;
+    }
+
+
+    /* FORM STYLING STARTS HERE ---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    /* Style the form - display items horizontally */
+    .form-inline {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+    }
+
+        /* Add some margins for each label */
+        .form-inline label {
+            margin: 5px 10px 5px 0;
+        }
+
+        /* Style the input fields */
+        .form-inline input {
+            vertical-align: middle;
+            margin: 5px 10px 5px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+    /* Style the submit button */
+
+
+    #submit {
+        padding: 10px 20px;
+        background-color: dodgerblue;
+        border: 1px solid #ddd;
+        color: white;
+    }
+
+    #submit {
+        background-color: royalblue;
+    }
 </style>
