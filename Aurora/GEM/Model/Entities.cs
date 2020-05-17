@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 
 
 namespace GEM.Model
@@ -9,9 +9,12 @@ namespace GEM.Model
 
 	public class Site
 	{
-		public List<Geodata> Sites { get; set; }
+		public List<Geodata> Sites { get; set; } = new List<Geodata>();
 
 		public Geodata this[string siteName] => Sites.Find(geodata => siteName == geodata.name);
+		public Geodata this[int index] => Sites.ElementAtOrDefault(index);
+
+		public List<PropertyInfo> Properties { get; set; } = new List<PropertyInfo>(new Geodata().GetType().GetProperties().ToList());
 	}
 
 	public class Geodata
