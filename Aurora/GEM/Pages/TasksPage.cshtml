@@ -1,29 +1,106 @@
 ﻿@page
 @model GEM.TasksPageModel
+@using GEM.Model
+@using System.Reflection
 @{
 	ViewData["Title"] = "Tasks";
 }
-<style>
-	table {
-	}
-
-	th {
-		border-bottom: 2px solid lightgrey;
-		background-color: rgb(240, 240, 240);
-	}
-
-	tr:hover {
-		background-color: #f5f5f5;
-	}
-
-</style>
 
 
 <h1 class="display-4">Tasks</h1>
 <p>Create tasks from your incoming geodata. These tasks will allow you attach event-based rules to any field you want receiving alerts when you need them, where you need them, all in real-time.</p>
 
-<h2>Routers</h2>
-
-@Model.GenerateTable()
 
 
+<!-- TASK MENUBAR -->
+<div class="task_menubar">
+	<div class="menubar_createColumn column">
+		<!--<input class="createColumn_neworcancelButton" id="newTask" type="button" name="createOrCancel" value="New Task" />-->
+		<input class="createColumn_neworcancelButton" id="cancelTask" type="button" name="createOrCancel" value="Cancel Task" />
+	</div>
+	<div class="newTaskParameters column">
+		<div class="menubar_tasknameColumn">
+			<span class="menubar_label">Task Name</span>
+			<input class="tasknameColumn_inputName" type="text" name="createOrCancel" value="" placeholder="" />
+		</div>
+		<div class="menubar_saveColumn">
+			<button class="saveColumn_button" name="createOrCancel" type="button" value="save" onclick="">save</button>
+		</div>
+	</div>
+	<div class="menubar_tasklistColumn column">
+		<div class="tasklistColumn_container">
+			<span class="menubar_label">Load Task</span>
+			<div class="dropdownGem closed taskList">
+				<div class="dropdownGem-title" id="taskDropdownButton">
+					<span class="selection taskSelection"></span>
+					<i class="fas fa-play dropdown-arrow taskArrow"></i>
+				</div>
+				<div class="dropdownGem-menu">
+					<ul class="dropdownUL taskUL">
+						@foreach (GEM.Model.Task task in Model.DEMOTASKS) {
+							<li class="taskLI">@task.TaskName</li>
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+<!-- RULE BOARD -->
+<div class="task_baseboard">
+	<!-- Subscription Selector -->
+	<div class="subSelectorContainer">
+		<span class="selectorDescription">Notify everybody in the subscription...</span>
+		<div class="dropdownGem closed subscriptionList">
+			<div class="dropdownGem-title" id="subscriptionDropdownButton">
+				<span class="selection subSelection"></span>
+				<i class="fas fa-play dropdown-arrow subArrow"></i>
+			</div>
+			<div class="dropdownGem-menu">
+				<ul class="dropdownUL subUL">
+					@foreach (GEM.Model.Subscription sub in Model.DEMOSUBSCRIPTIONS) {
+						<li class="subLI">@sub.GroupName</li>
+					}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Rules -->
+	@{BuildRules();}
+</div>
+
+@functions {
+	void BuildRules()
+	{
+		<div class="rulesContainer">
+			@foreach (PropertyInfo property in Model.SITE.Properties) {
+			<!-- RULE ROWS -->
+			<div class="rule_row">
+				<input class="rule_select rule@(property.Name)" type="checkbox" onclick="toggleConditions(`@property.Name`)" />
+				<div class="rule_body">
+					<fieldset class="rule_set">
+						<span>if</span>
+						<input class="fieldName" type="text" value="@property.Name" readonly />
+						<label class="fieldCondition condition@(property.Name)">
+							<input class="radioCondition" type="radio" name="@property.Name" checked/>
+							<i class="far fa-circle"></i>
+							<i class="fas fa-circle"></i>
+							changes
+						</label>
+						<label class="fieldCondition condition@(property.Name)">
+							<input class="radioCondition" type="radio" name="@property.Name" />
+							<i class="far fa-circle"></i>
+							<i class="fas fa-circle"></i>
+							is
+						</label>
+					</fieldset>
+				</div>
+			</div>
+			}
+		</div>
+	}
+}
