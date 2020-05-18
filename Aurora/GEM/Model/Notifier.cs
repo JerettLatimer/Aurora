@@ -11,7 +11,7 @@ namespace GEM.Model
 	public class Notifier
 	{
 		#region Properties
-		private readonly Task _task = new Task();
+		private readonly Task _task;
 		#endregion
 
 		#region Constructor
