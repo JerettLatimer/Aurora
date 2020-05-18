@@ -4,13 +4,13 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - Aurora</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/css/site.css" />
-	<link rel="stylesheet" href="~/css/map.css" />
-	<link rel="stylesheet" href="~/css/task.css" />
+	<link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="./css/site.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
 </head>
 <body>
-	<header>
+	<header class="header">
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 			<div class="container">
 				<a class="navbar-brand" asp-area="" asp-page="/Index">
@@ -67,11 +67,13 @@
 							<a class="nav-link text-dark" asp-area="" asp-page="/SubscriptionsPage">Subscriptions</a>
 						</li>
 					</ul>
+					<div class="line"></div>
 				</div>
 			</div>
 		</nav>
 	</header>
-	<div class="container">
+
+	<div class="content container">
 		<main role="main" class="pb-3">
 			@RenderBody()
 		</main>

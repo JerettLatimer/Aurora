@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -6,6 +7,7 @@ using System.Reflection;
 
 namespace GEM.Model
 {
+
 
 	public class Site
 	{
@@ -19,7 +21,8 @@ namespace GEM.Model
 
 	public class Geodata
 	{
-		public string _id { get; set; }
+		[BsonId]
+		public string id { get; set; }
 		public string name { get; set; }
 		public string status { get; set; }
 		public Location location { get; set; }
