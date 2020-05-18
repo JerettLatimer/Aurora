@@ -12,7 +12,7 @@ namespace GEM
 {
     public class SubscriptionsPageModel : PageModel
     {
-        private readonly Model.Task _task = new Model.Task();
+        private readonly Model.Task _task = Fetcher._DEMO_TASKS.FirstOrDefault();
         private StringValues temp;
 
         [BindProperty]
