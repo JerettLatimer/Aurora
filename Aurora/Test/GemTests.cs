@@ -67,7 +67,7 @@ namespace Test
 			var result = await response.Content.ReadAsAsync<Geodata>();
 
 			// Assert
-			Assert.IsNotNull(result._id);
+			Assert.IsNotNull(result.id);
 			Assert.IsNotNull(result.name);
 			Assert.IsNotNull(result.status);
 			Assert.IsNotNull(result.location.coordinates.latitude);

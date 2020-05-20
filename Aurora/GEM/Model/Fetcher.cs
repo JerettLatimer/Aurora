@@ -54,7 +54,8 @@ namespace GEM.Model
 			_DEMO_TASKS = new List<GEM.Model.Task> {
 				new GEM.Model.Task {
 					TaskName = "Demo Task",
-					SubscriptionGroup = _DEMO_SUBSCRIPTIONS[2]
+					SubscriptionGroup = _DEMO_SUBSCRIPTIONS[2],
+					SelectedRules = {"status" }
 				}
 			};
 		}
@@ -63,8 +64,8 @@ namespace GEM.Model
 		public static void RunAsync()
 		{
 			_client = new HttpClient {
-				//BaseAddress = new Uri("https://localhost:44353/")
 				BaseAddress = new Uri("https://aurora-microservices-api.azurewebsites.net/")
+				//BaseAddress = new Uri("https://aurora-microservices-api.azurewebsites.net/")
 			};
 			_client.DefaultRequestHeaders.Accept.Clear();
 			_client.DefaultRequestHeaders.Accept.Add(

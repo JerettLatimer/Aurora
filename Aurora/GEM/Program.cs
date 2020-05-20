@@ -15,7 +15,7 @@ namespace Aurora
     {
         public static void Main(string[] args)
         {
-            //Notifier.SendNotification(); allows notifier to be called
+           // Notifier.SendNotification(); //allows notifier to be called
             CreateHostBuilder(args).Build().Run();
         }
 
