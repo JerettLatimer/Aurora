@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GEM
 {
-    public class GroupModel : PageModel
+    public class SubscriptionsPageModel : PageModel
     {
         public void OnGet()
         {

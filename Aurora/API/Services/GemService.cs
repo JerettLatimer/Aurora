@@ -12,9 +12,9 @@ using API.Models;
 
 namespace API.Services
 {
-	public class GemService
+	public class GemService : IGemService
 	{
-		private readonly IMongoCollection<Geodata> _rawGeodata;
+		public readonly IMongoCollection<Geodata> _rawGeodata;
 
 		public GemService(IDatabaseSettings settings)
 		{
@@ -22,6 +22,8 @@ namespace API.Services
 			IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
 			_rawGeodata = database.GetCollection<Geodata>(settings.Geodata_CollectionName);
 		}
+
+
 
 		public async Task<List<Geodata>> Get()
 		{

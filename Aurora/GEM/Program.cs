@@ -15,15 +15,12 @@ namespace Aurora
     {
         public static void Main(string[] args)
         {
-            //Notifier.SendNotification(); allows notifier to be called
+           // Notifier.SendNotification(); //allows notifier to be called
             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

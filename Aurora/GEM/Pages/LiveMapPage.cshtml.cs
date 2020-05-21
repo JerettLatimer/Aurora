@@ -8,11 +8,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Aurora.Pages
 {
-    public class MapModel : PageModel
+    public class LiveMapPageModel : PageModel
     {
-        private readonly ILogger<MapModel> _logger;
+        private readonly ILogger<LiveMapPageModel> _logger;
 
-        public MapModel(ILogger<MapModel> logger)
+        public LiveMapPageModel(ILogger<LiveMapPageModel> logger)
         {
             _logger = logger;
         }

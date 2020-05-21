@@ -1,13 +1,53 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-html {
-    overflow-y: scroll;
+/*@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css") html {
+    overflow-y: auto;
+}*/
+
+.footer {
+    background-color: white;
+    z-index: 100;
+}
+
+.header {
+    background-color: white;
+    z-index: 99;
+}
+
+body {
+    background-color: white;
+}
+
+p {
+    font-family: 'Segoe UI';
+    font-weight: 300;
+}
+
+span {
+    font-family: 'Segoe UI';
+    font-weight: 300;
+    color: #848484;
+}
+
+label {
+    margin-bottom: 0;
+}
+
+ul {
+    background: white;
+    list-style: none;
 }
 
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
+}
+
+.line {
+    width: auto;
+    height: 3px;
+    background-color: rgb(220, 255, 0);
 }
 
 /* Provide sufficient contrast against white background */
@@ -57,28 +97,522 @@ button.accept-policy {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: absolute;
+    min-height: 100%;
+    width: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 61px;
+    margin-top: 61px;
+    height: calc(100vh - 122px);
+    width: 100%;
+    display: flex;
 }
+
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
 
-@font-face {
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    white-space: nowrap;
+}
+
+@font-face { /* For Logo SVG */
     font-family: After Night;
     src: url('../resources/fonts/After Night.ttf');
 }
 
-@font-face {
+@font-face { /* For Logo SVG */
     font-family: FunctionSmc;
     src: url('../resources/fonts/FunctionSmc Regular.ttf');
+}
+
+
+
+/* HEADER NAVIGATION
+--------------------------------------------------- */
+.text-dark:hover {
+    background-image: linear-gradient(rgb(220, 255, 0), rgb(220, 255, 0));
+    background-repeat: no-repeat;
+    background-size: calc(100% - 16px) 2px;
+    background-position: bottom;
+}
+
+
+
+/* TASK PAGE 
+--------------------------------------------------- */
+.task_baseboard {
+    background: #F9F9F9;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
+    position: inherit;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    overflow: auto;
+    -ms-overflow-style: none;
+}
+.task_baseboard::-webkit-scrollbar {
+    display: none;
+}
+
+.dropdownGem.closed .dropdownGem-title {
+    border-bottom: none;
+}
+
+.dropdownGem.closed .dropdown-arrow {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.dropdownGem.closed .dropdownGem-menu {
+    margin-top: 0px;
+    display: none;
+}
+
+.dropdownGem.closed .dropdownGem-menu li {
+    height: 0px;
+}
+
+.dropdownGem:focus {
+    box-shadow: none;
+}
+
+.dropdownGem:active {
+    box-shadow: none;
+    background-color: white;
+    border-color: #A4A4A4;
+}
+
+.dropdownGem:hover {
+    outline: none;
+}
+
+.dropdownGem-menu {
+    outline: none;
+    top: -10px;
+    position: relative;
+    transition: all 0.3s ease-out;
+}
+
+.dropdownGem-menu ul {
+    background: white;
+    list-style: none;
+    padding-left: 0;
+}
+
+.dropdownGem-menu li {
+    color: black;
+    cursor: pointer;
+    font-family: 'Segoe UI';
+    font-weight: lighter;
+}
+.dropdownGem-menu li:hover {
+    background: rgb(236, 255, 118);
+    transition: all 1s ease;
+}
+
+i.fas.fa-play.dropdown-arrow {
+    align-self: center;
+    align-content: normal;
+    justify-self: flex-end;
+}
+
+.dropdownGem:not(.closed) .dropdown-arrow {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Subscription Selection */
+.subSelectorContainer {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.selectorDescription {
+    display: flex;
+    align-self: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.subscriptionList {
+    min-width: 200px;
+    align-self: center;
+    width: 600px;
+    margin-top: 10px;
+    outline: none;
+    height: 60px;
+    border-radius: 10px;
+    transition: box-shadow 0.5s ease-out;
+}
+.subscriptionList.closed:hover {
+    box-shadow: 0 0 14px rgba(100,100,100,0.2);
+    transition: box-shadow 0.5s ease-in;
+}
+
+#subscriptionDropdownButton {
+    height: 60px;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.subSelection {
+    color: black;
+    font-size: 36px;
+    text-align: center;
+    width: 100%;
+    user-select: none;
+}
+
+.subArrow {
+    font-size: 38px;
+    margin: 12px;
+    color: #F2F2F2;
+}
+
+.subUL {
+    padding-bottom: 10px;
+    border-radius: 0px 0px 10px 10px;
+    padding-top: 20px;
+}
+
+.subLI {
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 20px;
+    user-select: none;
+}
+
+/* Rules */
+.rulesContainer {
+
+}
+
+.rule_row {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    align-items: center;
+}
+
+.rule_select {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 0.5px solid black;
+}
+
+.rule_body {
+    display: flex;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width: 100%;
+    height: 68px;
+    border-radius: 10px;
+    align-items: center;
+    padding: 15px 24px 15px 24px;
+    margin-left: 20px;
+}
+
+.rule_set {
+    width: 100%;
+    display: contents;
+}
+.rule_set span {
+    font-size: 18px;
+}
+
+.fieldName {
+    border-radius: 10px;
+    border: none;
+    height: 38px;
+    width: 170px;
+    min-width: 100px;
+    max-width: 200px;
+    background-color: #F6F6F6;
+    padding: 5px 15px 5px 15px;
+    margin: 0px 18px 0px 18px;
+    font-family: 'Segoe UI';
+    font-size: 18px;
+    text-align: center;
+    display: inline-flex;
+}
+
+.fieldCondition {
+    margin-right: 30px;
+    font-family: 'Segoe UI';
+    font-weight: 300;
+    color: #848484;
+    font-size: 18px;
+    display: inline-flex;
+    align-items: flex-end;
+    vertical-align: middle;
+}
+
+.radioCondition {
+    display: none;
+}
+.radioCondition:checked~.far.fa-circle,
+.radioCondition~.fas.fa-circle {
+    display: none;
+}
+.radioCondition:checked~.fas.fa-circle {
+    display: inline-flex;
+}
+.fas.fa-circle {
+    color: #00E7BD;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 2px;
+}
+.far.fa-circle {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 2px;
+}
+
+/* Task Menu */
+.task_menubar {
+    display: flex;
+    flex-direction: row;
+    margin: 14px 0px 14px 0px;
+    height: 50px;
+    align-items: flex-end;
+}
+
+.column {
+    margin: 10px;
+}
+
+.menubar_createColumn {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.createColumn_neworcancelButton {
+    background: none;
+    border: none;
+    align-self: flex-end;
+    text-align: center;
+    outline: none;
+    color: #fd018d;
+    transition: all 0.2s ease-out;
+}
+.createColumn_neworcancelButton:hover {
+    color: #d40047;
+    transition: all 0.2s ease-in;
+}
+
+.newTaskParameters {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.menubar_tasknameColumn {
+    width: 45%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    margin: 0px 10px 0px 10px;
+}
+
+.menubar_label {
+    font-size: small;
+}
+
+.tasknameColumn_inputName {
+    border-radius: 5px;
+    border: 1px solid #A4A4A4;
+    height: 30px;
+    background: white;
+}
+.tasknameColumn_inputName:focus {
+    outline-color: rgb(223, 255, 171);
+    outline-style: auto;
+    transition: outline-color 0.3s ease-in-out;
+}
+.tasknameColumn_inputName:hover {
+    outline-color: #949494;
+    outline-style: auto;
+}
+.tasknameColumn_inputName:focus:hover {
+    outline-color: rgb(157, 255, 0);
+    outline-style: auto;
+    transition: outline-color 0.3s ease-in-out;
+}
+
+.menubar_saveColumn {
+    width: 18%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin: 0px 10px 0px 10px;
+}
+
+.saveColumn_button {
+    background-image: radial-gradient(rgb(19,255,85) 24%, rgb(0,255,243) 77%);
+    border-radius: 50px;
+    border: none;
+    box-shadow: 3px 3px 4px rgba(0,0,0,.10), -3px -3px 4px rgba(255,255,255,.90);
+    text-transform: uppercase;
+    font-weight: 700;
+    color: white;
+    width: 70px;
+    height: 30px;
+    position: relative;
+    left: -20%;
+    transition: all 0.3s ease-in;
+}
+.saveColumn_button:active {
+    outline: none;
+}
+.saveColumn_button:focus {
+    outline: none;
+    /*background-image: radial-gradient(rgb(0,255,243) 24%, rgb(19,255,85) 77%);
+    transition: all 0.3s ease;*/
+    /*box-shadow: inset 2px 2px 1px rgba(53, 111, 73, 0.1), inset -2px -2px 1px rgb(136, 255, 244);
+    background--blend-mode: normal;*/
+}
+.saveColumn_button:focus:not(:hover) {
+    border: none;
+}
+.saveColumn_button:hover {
+    transition: all 0.3s ease-in;
+    box-shadow: -3px 3px 4px rgba(0,0,0,.10), 3px -3px 4px rgba(255,255,255,1);
+}
+
+.menubar_tasklistColumn {
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
+}
+
+.tasklistColumn_container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.menubar_tasklistColumn span.menubar_label {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.taskList {
+    width: 100%;
+    outline: none;
+    display: flex;
+    height: 30px;
+    flex-direction: column;
+}
+.taskList.closed:hover {
+    box-shadow: 0 0 14px rgba(100,100,100,0.2);
+    transition: box-shadow 0.5s ease-in;
+}
+
+#taskDropdownButton {
+    height: 30px;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #A4A4A4;
+    color: #848484;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.taskSelection {
+    color: black;
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    user-select: none;
+}
+
+.taskArrow {
+    font-size: 1rem;
+    margin: 5px;
+    color: #A4A4A4;
+}
+
+.taskUL {
+    padding-bottom: 5px;
+    border-radius: 0px 0px 5px 5px;
+    padding-top: 6px;
+    border: 1px solid #A4A4A4;
+    margin-top: 6px;
+    border-top: none;
+}
+
+.taskLI {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 0.75rem;
+    user-select: none;
+}
+
+
+/* LIVE MAP
+--------------------------------------------------- */
+.MongoMap {
+    background: #FFFFFF;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
+    width: 100%;
+    height: 100%;
+    position: inherit;
+    display: inherit;
+}
+
+.content.container {
+    position: relative;
+    height: calc(98vh - 122px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+
+.mb-3 {
+    margin-bottom: 0 !important;
+}
+
+.pb-3 {
+    padding-bottom: 0 !important;
+    height: 100% !important;
+    display: inline-flex !important;
+    flex-flow: column !important;
+    width: inherit !important;
 }
