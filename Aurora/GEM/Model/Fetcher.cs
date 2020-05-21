@@ -26,8 +26,8 @@ namespace GEM.Model
 		public static async Task RunAsync()
 		{
 			_client = new HttpClient {
-				//BaseAddress = new Uri("https://localhost:44353/")
-				BaseAddress = new Uri("https://aurora-microservices-api.azurewebsites.net/")
+				BaseAddress = new Uri("https://localhost:44353/")
+				//BaseAddress = new Uri("https://aurora-microservices-api.azurewebsites.net/")
 			};
 			_client.DefaultRequestHeaders.Accept.Clear();
 			_client.DefaultRequestHeaders.Accept.Add(

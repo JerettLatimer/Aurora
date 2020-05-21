@@ -30,7 +30,7 @@ namespace GEM
 
             foreach (Geodata router in _survey.Sites) {
                 var row = new HtmlTag("tr");
-                row.Add("td").Text(router._id.ToString());
+                row.Add("td").Text(router.id.ToString());
                 row.Add("td").Text(router.name);
                 if (router.status.Equals("online")) {
                     row.Add("td").Text(router.status).Style("color", "green");
