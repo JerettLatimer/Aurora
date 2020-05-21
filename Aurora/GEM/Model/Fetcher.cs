@@ -17,6 +17,7 @@ namespace GEM.Model
 {
 	public class Fetcher
 	{
+		public static int flag = 0;
 		static HttpClient _client;
 		/* DEMO */
 		public static List<Subscription> _DEMO_SUBSCRIPTIONS;
@@ -29,13 +30,18 @@ namespace GEM.Model
 		// TODO: this is what should be triggered when API signals to Fetcher that a Get to the API is needed
 		public static async void GetGeodataListAsync()
 		{
-			RunAsync();
+
+			//if (flag < 1)
+			
+				RunAsync();
+			
 			HttpResponseMessage response = await _client.GetAsync("api/Gem");
-			_client.Dispose();
+
 
 			// 200
 			if (response.IsSuccessStatusCode) {
 				Survey.Sites = await response.Content.ReadAsAsync<List<Geodata>>();
+				flag++;
 			}
 			else {
 				// TODO: Need to handle case where a valid response is not recieved.
@@ -64,8 +70,8 @@ namespace GEM.Model
 		public static void RunAsync()
 		{
 			_client = new HttpClient {
+				//BaseAddress = new Uri("http://localhost:44353")
 				BaseAddress = new Uri("https://aurora-microservices-api.azurewebsites.net/")
-				//BaseAddress = new Uri("https://aurora-microservices-api.azurewebsites.net/")
 			};
 			_client.DefaultRequestHeaders.Accept.Clear();
 			_client.DefaultRequestHeaders.Accept.Add(

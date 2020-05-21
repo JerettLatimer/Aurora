@@ -26,6 +26,7 @@ namespace GEM.Model
     {
         #region Properties
         public static List<Task> _tasks = Fetcher._DEMO_TASKS;
+        private static IMongoCollection<Geodata> collection;
         #endregion
 
 
@@ -35,7 +36,8 @@ namespace GEM.Model
 
         internal static void Application_Start()
         {
-            new Thread(() => StartApiWatch()).Start();
+            CollectionConnection();
+            new Thread(() => StartCollectionWatch()).Start();
         }
 
         public static void StartApiWatch()
@@ -67,11 +69,39 @@ namespace GEM.Model
 
         }
 
+
+
+            private static void CollectionConnection()
+            {            // We are just watching update operation
+                var pipeline = new EmptyPipelineDefinition<Geodata>().Match("{ operationType: { $eq: 'update' } }");
+                var client = new MongoClient("mongodb+srv://Fetcher:nvZUzMHPqnpX50kj@aurora-pjpea.azure.mongodb.net/test?retryWrites=true&w=majority");
+                var database = client.GetDatabase("GEM");
+                collection = database.GetCollection<Geodata>("Geodata");
+            }
+            public static void StartCollectionWatch()
+            {
+
+                // start the watch on the collection
+                using (var cursor = collection.Watch())
+                {
+                    foreach (var change in cursor.ToEnumerable())
+                    {
+                    Console.WriteLine("Enter updatesurvey");
+
+                    UpdateSurvey();
+                    Console.WriteLine("we made it here");
+                    }
+                }
+            }
+        
+
+
+
         private static void UpdateSurvey()
         {
             var task = _tasks.First<Task>();
             task.OutdatedSurvey = task.UpdatedSurvey;
-            Fetcher.GetGeodataListAsync();
+            Fetcher.GetGeodataListAsync();// Stuck here
             task.UpdatedSurvey = Fetcher.Survey;
             PassTaskToNotifier(task);
 

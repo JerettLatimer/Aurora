@@ -25,7 +25,7 @@ namespace API.Models
     static class Monitor
     {
         private static IMongoCollection<Geodata> collection;
-        internal static void Application_Start()
+        private static void Application_Start()
         {
             CollectionConnection();
             new Thread(() => StartCollectionWatch()).Start();
@@ -55,7 +55,7 @@ namespace API.Models
                             { "thing2", "Data" }
                         };
                         var content = new FormUrlEncodedContent(values);
-                        var response = await client.PostAsync("https://localhost:5001/", content); //when running API solo this is where it pings the active refusal after change in db is made
+                        var response = await client.PostAsync("http://localhost:5001/", content); //when running API solo this is where it pings the active refusal after change in db is made
                         var responseString = await response.Content.ReadAsStringAsync();
                     }
                 }
