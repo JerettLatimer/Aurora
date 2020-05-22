@@ -30,17 +30,11 @@ namespace GEM.Model
 
 
         #region Methods
-
-
-
-        internal static void Application_Start()
-        {
-            new Thread(() => StartApiWatch()).Start();
-        }
+        internal static void Application_Start() => new Thread(() => StartApiWatch()).Start();
 
         public static void StartApiWatch()
         {
-            string[] prefixes = { "https://aurora-microservices-api.azurewebsites.net/" };
+            string[] prefixes = { "https://localhost:25/" };
             if (!HttpListener.IsSupported)
             {
                 Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
@@ -54,17 +48,27 @@ namespace GEM.Model
             {
                 listener.Prefixes.Add(s);
             }
-
             listener.Start();
-            HttpListenerContext context = listener.GetContext();
+            IAsyncResult result = listener.BeginGetContext(new AsyncCallback(ListenerCallback),listener);
+            Console.WriteLine("Waiting for request to be processed asyncronously.");
+            result.AsyncWaitHandle.WaitOne();
+            Console.WriteLine("Request processed asyncronously.");
+            listener.Close();
+        }
+
+        private static void ListenerCallback(IAsyncResult result)
+        {
+            HttpListener listener = (HttpListener) result.AsyncState;
+            HttpListenerContext context = listener.EndGetContext(result);
             HttpListenerRequest request = context.Request;
-
-            //Method call for 3 way swap
+            HttpListenerResponse response = context.Response;
+            string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+            response.ContentLength64 = buffer.Length;
+            System.IO.Stream output = response.OutputStream;
+            output.Write(buffer, 0, buffer.Length);
+            output.Close();
             UpdateSurvey();
-
-
-            listener.Stop();
-
         }
 
         private static void UpdateSurvey()
@@ -76,30 +80,6 @@ namespace GEM.Model
             PassTaskToNotifier(task);
 
         }
-/*        public static void BuildBody(Task task)
-        {
-            var OldGeo = task.OutdatedSurvey.GetType();
-            var NewGeo = task.UpdatedSurvey.GetType();
-
-            task.MessageBody.Append(string.Format("A Task in the {0} subscription profile has reported a change in one or more of its monitored fields: \n", task.SubscriptionGroup.GroupName));
-            foreach (string rule in task.SelectedRules)
-            {
-                task.MessageBody.Append(string.Format("\t{0}:\n", rule));
-                foreach (var newSite in Fetcher.Survey.Sites)
-                {
-                    var oldSite = task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
-                    if (!oldSite.GetType().GetProperty(rule).Equals(newSite.GetType().GetProperty(rule)))
-                    {
-                        task.MessageBody.Append(string.Format("\t\t{0} = \"{1}\" ---> \"{2}\"\n", newSite.name, oldSite.GetType().GetProperty(rule), newSite.GetType().GetProperty(rule)));
-                    }
-                }
-                task.MessageBody.Append(string.Format("\n"));
-            }
-            PassTaskToNotifier(task);
-
-
-        }*/
-
 
         internal static void PassTaskToNotifier(Task task) => new Notifier(task);
     }
