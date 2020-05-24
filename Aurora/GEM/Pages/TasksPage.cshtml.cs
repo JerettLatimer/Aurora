@@ -9,6 +9,7 @@ using HtmlTags;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Web;
 
 namespace GEM
 {
@@ -17,6 +18,12 @@ namespace GEM
 		public List<GEM.Model.Task> DEMOTASKS = Fetcher._DEMO_TASKS;
 		public List<Subscription> DEMOSUBSCRIPTIONS = Fetcher._DEMO_SUBSCRIPTIONS;
 		public Site SITE = Fetcher.Survey;
+
+		[WebMethod]
+		public static void GetList()
+		{
+
+		}
 	}
 }
 
