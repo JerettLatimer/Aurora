@@ -8,34 +8,34 @@
 <p>You can subscribe to a selected <em>Subscription</em> profile here, receiving only alerts you care about.</p>
 <p>Here admins can fully manage all the <em>Subscriptions</em>.</p>
 
-<form class="form-inline" id="subscription">
-    <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" placeholder="Enter first name" name="inputFields" />
-    <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" placeholder="Enter last name" name="inputFields" />
-    <label for="email">Email:</label>
-    <input type="email" id="email" placeholder="Enter email" name="inputFields" />
+<form class="form-inline" id="subscription" method="post">
+    <label asp-for="FirstName">First Name:</label>
+    <input type="text" id="firstName" placeholder="Enter first name" name="firstName" />
+    <label asp-for="LastName">Last Name:</label>
+    <input type="text" id="lastName" placeholder="Enter last name" name="lastName" />
+    <label asp-for="Email">Email:</label>
+    <input type="email" id="email" placeholder="Enter email" name="email" />
     <div class="dropdown">
         <button class="dropbtn">
             Select Group
             <p class="d-inline"> <i class="arrow down"></i></p>
         </button>
         <div class="dropdown-content">
-            <label for="manager">
+            <label for="ManagerChoice">
                 <input name="managerChoice" id="manager" type="checkbox" value="Manager" />
                 Manager
             </label>
-            <label for="analyst">
+            <label for="AnalystChoice">
                 <input name="analystChoice" id="analyst" type="checkbox" value="Analyst" />
                 Analyst
             </label>
-            <label for="technician">
+            <label for="TechnicianChoice">
                 <input name="technicianChoice" id="technician" type="checkbox" value="Technician" />
                 Technician
             </label>
         </div>
     </div>
-    <button id="submit" type="submit">Submit</button>
+    <button id="submit" type="submit">Save</button>
 </form>
 
 <style>
