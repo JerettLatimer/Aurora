@@ -12,54 +12,27 @@ namespace GEM
 {
     public class SubscriptionsPageModel : PageModel
     {
-        private readonly Model.Task _task = Fetcher._DEMO_TASKS.FirstOrDefault();
-        private StringValues temp;
-
         [BindProperty]
         public string FirstName { get; set; }
         [BindProperty]
         public string LastName { get; set; }
         [BindProperty]
         public string Email { get; set; }
+        [BindProperty]
         public string GroupName { get; set; }
 
-        public void OnGet()
-        {
 
-        }
-
-        public void OnPost(bool ManagerChoice, bool AnalystChoice, bool TechnicianChoice)
+        public void OnPost()
         {
             string userName = FirstName + " " + LastName;
-            bool managerCheck = Request.Form.TryGetValue("ManagerChoice", out temp);
-            bool analystCheck = Request.Form.TryGetValue("AnalystChoice", out temp);
-            bool technicianCheck = Request.Form.TryGetValue("TechnicianChoice", out temp);
 
-            if (managerCheck)
-            {
-                GroupName = "Manager";
-            }
-            
-            if(analystCheck)
-            {
-                GroupName = "Analyst";
-            }
-
-            if(technicianCheck)
-            {
-                GroupName = "Technician";
-            }
-            
-
-            Subscriber subscriber = new Subscriber()
+            var subscriber = new Subscriber()
             {
                 UserName = userName,
                 UserEmail = Email
             };
 
-            // Right now this throws an exception because SubscriptionGroup is uninitialized.
-            _task.SubscriptionGroup.GroupName = GroupName;
-            _task.SubscriptionGroup.Subscribers.Add(subscriber);
+            Fetcher._DEMO_SUBSCRIPTIONS.Single(sub => sub.GroupName == GroupName).Subscribers.Add(subscriber);
         }
     }
 }

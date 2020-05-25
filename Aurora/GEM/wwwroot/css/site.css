@@ -498,7 +498,7 @@ background--blend-mode: normal;*/
     transition: box-shadow 0.5s ease-out;
 }
 .subscriptionList.closed:hover {
-    box-shadow: 0 0 14px rgba(100,100,100,0.2);
+    box-shadow: 0 0 14px rgba(100,100,100,0.3);
     transition: box-shadow 0.5s ease-in;
 }
 @media only screen and (max-device-width: 400px) {
@@ -518,6 +518,7 @@ background--blend-mode: normal;*/
     cursor: pointer;
     display: inline-flex;
     justify-content: space-between;
+    box-shadow: 0 0 10px #e6e6e6;
 }
 
 .subSelection {
@@ -531,7 +532,7 @@ background--blend-mode: normal;*/
 .subArrow {
     font-size: 38px;
     margin: 12px;
-    color: #F2F2F2;
+    color: #c5c5c5;
 }
 
 .subUL {
@@ -673,3 +674,8 @@ background--blend-mode: normal;*/
     flex-flow: column !important;
     width: inherit !important;
 }
+
+
+
+/* SUBSCRIPTION PAGE
+--------------------------------------------------- */

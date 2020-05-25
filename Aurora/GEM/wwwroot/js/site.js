@@ -62,7 +62,7 @@ $(".dropdownGem-menu li").click(function () {
 });
 
 function closeMenu(el) {
-    $(el).closest('.dropdownGem').toggleClass("closed").find(".selection").text($(el).text());
+    $(el).closest('.dropdownGem').toggleClass("closed").find(".selection").val($(el).text());
     $('.dropdownGem-menu ul').css("top", 0);
 }
 

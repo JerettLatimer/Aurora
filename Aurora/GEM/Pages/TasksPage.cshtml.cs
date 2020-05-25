@@ -14,9 +14,15 @@ namespace GEM
 {
 	public class TasksPageModel : PageModel
 	{
-		public List<GEM.Model.Task> DEMOTASKS = Fetcher._DEMO_TASKS;
-		public List<Subscription> DEMOSUBSCRIPTIONS = Fetcher._DEMO_SUBSCRIPTIONS;
-		public Site SITE = Fetcher.Survey;
+		[BindProperty]
+		public string GroupName { get; set; }
+		[BindProperty]
+		public string TaskName { get; set; }
+
+		public void OnPost()
+		{
+			Fetcher._DEMO_TASKS.First().SubscriptionGroup = Fetcher._DEMO_SUBSCRIPTIONS.Single(sub => sub.GroupName == GroupName);
+		}
 	}
 }
 
