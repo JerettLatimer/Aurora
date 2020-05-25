@@ -22,9 +22,10 @@ namespace GEM
 		[BindProperty]
 		public string Checkboxes { get; set; }
 
-		public List<GEM.Model.Task> DEMOTASKS = Fetcher._DEMO_TASKS;
-		public List<Subscription> DEMOSUBSCRIPTIONS = Fetcher._DEMO_SUBSCRIPTIONS;
-		public Site SITE = Fetcher.Survey;
+		public void OnPost()
+		{
+			Fetcher._DEMO_TASKS.First().SubscriptionGroup = Fetcher._DEMO_SUBSCRIPTIONS.Single(sub => sub.GroupName == GroupName);
+		}
 	}
 }
 
