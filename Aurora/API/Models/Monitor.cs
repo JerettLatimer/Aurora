@@ -15,6 +15,7 @@ using System.Threading;
 using API.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 /**
  * <see cref="https://devesh4blog.wordpress.com/2018/11/01/real-time-notification-with-mongodb-change-stream-in-c/"/>
@@ -46,17 +47,16 @@ namespace API.Models
             {
                  foreach(var change in cursor.ToEnumerable()) 
                 {
-                    using(var client = new HttpClient())
+                    using(var client = new HttpClient()) // ref: https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
                     {
-                        //BaseAddress = new Uri("https://aurora-microservices-gem.azurewebsites.net/")
+                        client.DefaultRequestHeaders.Accept.Clear();
                         var values = new Dictionary<string, string>
                         {
                             { "thing1", "New" },
                             { "thing2", "Data" }
                         };
                         var content = new FormUrlEncodedContent(values);
-                        var response = await client.PostAsync("https://localhost:5001/", content); //when running API solo this is where it pings the active refusal after change in db is made
-                        var responseString = await response.Content.ReadAsStringAsync();
+                        var response = await client.GetAsync(new Uri("https://localhost:5001/"));
                     }
                 }
             }
