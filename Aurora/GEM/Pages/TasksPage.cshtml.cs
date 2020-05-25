@@ -25,6 +25,8 @@ namespace GEM
 		public void OnPost()
 		{
 			Fetcher._DEMO_TASKS.First().SubscriptionGroup = Fetcher._DEMO_SUBSCRIPTIONS.Single(sub => sub.GroupName == GroupName);
+			string[] array = Checkboxes.Trim('[').Trim(']').Replace("\"", String.Empty).Split(",");
+			Fetcher._DEMO_TASKS.First().SelectedRules = array.ToList<string>();
 		}
 	}
 }

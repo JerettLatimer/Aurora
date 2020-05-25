@@ -79,3 +79,11 @@ function openMenu(el) {
         $('.dropdownGem-menu ul').css("top", -top);
     });
 }
+
+function submitHandler() {
+    alert("submit handler entered");
+    var selectedRules = $(".rule_select:checked").map(function () {
+        return this.value;
+    }).get();
+    $('#input_hidden_field_arr').val(JSON.stringify(selectedRules));
+}

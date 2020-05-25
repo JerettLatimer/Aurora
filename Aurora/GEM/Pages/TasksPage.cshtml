@@ -83,7 +83,7 @@
 			@foreach (PropertyInfo property in Fetcher.Survey.Properties) {
 				<!-- RULE ROWS -->
 				<div class="rule_row">
-					<input class="rule_select rule@(property.Name)" type="checkbox" onclick="toggleConditions(`@property.Name`)" />
+					<input class="rule_select rule@(property.Name)" type="checkbox" value="@property.Name" onclick="toggleConditions(`@property.Name`)" />
 					<div class="rule_body">
 						<fieldset class="rule_set">
 							<span>if</span>
@@ -108,12 +108,3 @@
 	}
 }
 
-<script>
-    function submitHandler() {
-        alert("submit handler entered");
-        var selectedRules = $(".rule_select:checked").map(function () {
-			 return this.value;
-        }).get();
-        $('#input_hidden_field_arr').val(JSON.stringify(selectedRules));
-    }
-</script>

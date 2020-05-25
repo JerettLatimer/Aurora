@@ -3,7 +3,7 @@
     "API": {
       "commandName": "Project",
       "launchUrl": "api/GEM",
-      "applicationUrl": "https://localhost:5010/"
+      "applicationUrl": "https://aurora-microservices-api.azurewebsites.net/"
     }
   }
 }
