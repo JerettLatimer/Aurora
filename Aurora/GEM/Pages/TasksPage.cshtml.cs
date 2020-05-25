@@ -15,15 +15,16 @@ namespace GEM
 {
 	public class TasksPageModel : PageModel
 	{
+		[BindProperty]
+		public string GroupName { get; set; }
+		[BindProperty]
+		public string TaskName { get; set; }
+		[BindProperty]
+		public string Checkboxes { get; set; }
+
 		public List<GEM.Model.Task> DEMOTASKS = Fetcher._DEMO_TASKS;
 		public List<Subscription> DEMOSUBSCRIPTIONS = Fetcher._DEMO_SUBSCRIPTIONS;
 		public Site SITE = Fetcher.Survey;
-
-		[WebMethod]
-		public static void GetList()
-		{
-
-		}
 	}
 }
 

@@ -25,7 +25,7 @@
 		</div>
 		<div class="menubar_saveColumn">
 			<button class="saveColumn_button" name="createOrCancel" type="submit" value="save" onclick="submitHandler();">save</button>
-			@Html.Hidden("ModelSelectedRules", Model.DEMOTASKS.First().SelectedRules)
+			<input asp-for="Checkboxes" type="text" value="" id="input_hidden_field_arr" />
 		</div>
 	</div>
 	<div class="menubar_tasklistColumn column">
@@ -33,7 +33,7 @@
 			<span class="menubar_label">Load Task</span>
 			<div class="dropdownGem closed taskList">
 				<div class="dropdownGem-title" id="taskDropdownButton">
-					<span class="selection taskSelection"></span>
+					<input asp-for="TaskName" class="selection taskSelection" type="text"/>
 					<i class="fas fa-play dropdown-arrow taskArrow"></i>
 				</div>
 				<div class="dropdownGem-menu">
@@ -58,7 +58,7 @@
 		<span class="selectorDescription">Notify everybody in the subscription...</span>
 		<div class="dropdownGem closed subscriptionList">
 			<div class="dropdownGem-title" id="subscriptionDropdownButton">
-				<span class="selection subSelection"></span>
+				<input asp-for="GroupName" class="selection subSelection" type="text"/>
 				<i class="fas fa-play dropdown-arrow subArrow"></i>
 			</div>
 			<div class="dropdownGem-menu">
@@ -112,9 +112,6 @@
         var selectedRules = $(".rule_select:checked").map(function () {
 			 return this.value;
         }).get();
-        $("ModelSelectedRules").val(selectedRules);
-        alert($("ModelSelectedRules").val().toString());
-		$("document").full
+        $('#input_hidden_field_arr').val(JSON.stringify(selectedRules));
     }
 </script>
-
