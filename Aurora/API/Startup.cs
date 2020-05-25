@@ -41,6 +41,7 @@ namespace API
 
 			service = services.AddSingleton<GemService>();
 
+			services.AddScoped<IGemService, GemService>();
 			services.AddControllers()
 				.AddNewtonsoftJson(options => options.UseMemberCasing());
 		}

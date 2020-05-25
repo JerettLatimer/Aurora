@@ -23,7 +23,7 @@ namespace API.Models
 	public class Geodata
 	{
 		[BsonId]
-		public ObjectId _id { get; set; }
+		public ObjectId id { get; set; }
 		public string name { get; set; }
 		public string status { get; set; }
 		public Location location { get; set; }

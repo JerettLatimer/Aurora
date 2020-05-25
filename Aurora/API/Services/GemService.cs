@@ -14,7 +14,7 @@ namespace API.Services
 {
 	public class GemService : IGemService
 	{
-		public readonly IMongoCollection<Geodata> _rawGeodata;
+		private readonly IMongoCollection<Geodata> _rawGeodata;
 
 		public GemService(IDatabaseSettings settings)
 		{
