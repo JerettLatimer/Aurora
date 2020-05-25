@@ -56,7 +56,7 @@ namespace API.Models
                             { "thing2", "Data" }
                         };
                         var content = new FormUrlEncodedContent(values);
-                        var response = await client.GetAsync(new Uri("https://localhost:5001"));
+                        var response = await client.GetAsync(new Uri("https://localhost:5001/"));
                     }
                 }
             }

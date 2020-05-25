@@ -50,7 +50,7 @@ namespace Aurora
 			// 2: Create Mock Subscriptions and Task data (Mocks the reading of all Subscriptions in collection and all Tasks in collection)
 			Fetcher.DEMO_CREATEMOCKOBJECTS();
 			// 3: Call WatchApi
-			Tasker.Application_Start();
+			//Tasker.Application_Start();
 		}
 		/**/
 
