@@ -16,6 +16,8 @@ using API.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using MongoDB.Driver.Core.Events;
+using API.Hubs;
 
 /**
  * <see cref="https://devesh4blog.wordpress.com/2018/11/01/real-time-notification-with-mongodb-change-stream-in-c/"/>
@@ -25,6 +27,7 @@ namespace API.Models
 {
     static class Monitor
     {
+        private static GeoHub gimmegimme = new GeoHub();
         private static IMongoCollection<Geodata> collection;
         internal static void Application_Start()
         {
@@ -47,17 +50,8 @@ namespace API.Models
             {
                  foreach(var change in cursor.ToEnumerable()) 
                 {
-                    using(var client = new HttpClient()) // ref: https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
-                    {
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        var values = new Dictionary<string, string>
-                        {
-                            { "thing1", "New" },
-                            { "thing2", "Data" }
-                        };
-                        var content = new FormUrlEncodedContent(values);
-                        var response = await client.GetAsync(new Uri("https://localhost:5001/"));
-                    }
+                    await gimmegimme.SendMessage();
+                    
                 }
             }
         }

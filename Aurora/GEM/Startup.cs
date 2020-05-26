@@ -1,26 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GEM;
+using API.Hubs;
+using GEM.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using GEM.Model;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
+using System;
 
 namespace Aurora
 {
-	public class Startup
+    public class Startup
 	{
 		#region Fields
+		public HubConnection connection;
 		#endregion
 
 		#region Properties
@@ -35,6 +28,11 @@ namespace Aurora
 			/* DEMO START */
 			LaunchMockScenario();
 			/**/
+
+			connection = new HubConnectionBuilder()
+				.WithUrl("https://localhost:5010/GeoHub").Build();
+
+			CatchApiSignal();
 		}
 		#endregion
 
@@ -54,10 +52,28 @@ namespace Aurora
 		}
 		/**/
 
+		private async void CatchApiSignal()
+        {
+			connection.On("CallMeMaybe", () => 
+			{
+				Tasker.UpdateSurvey();
+			});
+            try
+            {
+				await connection.StartAsync();
+            }
+			catch (Exception ex)
+            {
+				Console.WriteLine("YOU DIDDLY DONE MESSED UP");
+            }
+        }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services) => services.AddRazorPages();
-
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.AddRazorPages();
+			services.AddSignalR();
+		}
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
@@ -74,7 +90,9 @@ namespace Aurora
 			app.UseStaticFiles();
 			app.UseRouting();
 			app.UseAuthorization();
-			app.UseEndpoints(endpoints => {	endpoints.MapRazorPages(); });
+			app.UseEndpoints(endpoints => {	endpoints.MapRazorPages();
+				endpoints.MapHub<GeoHub>("/GeoHub");
+			});
 		}
 		#endregion
 

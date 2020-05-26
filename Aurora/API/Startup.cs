@@ -16,6 +16,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.VisualBasic;
 using MongoDB.Driver;
+using API.Hubs;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace API
 {
@@ -33,6 +35,7 @@ namespace API
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			
 			services.Configure<DatabaseSettings>(
 				Configuration.GetSection(nameof(DatabaseSettings)));
 
@@ -40,6 +43,8 @@ namespace API
 				sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
 			service = services.AddSingleton<GemService>();
+
+			services.AddSignalR();
 
 			services.AddScoped<IGemService, GemService>();
 			services.AddControllers()
@@ -61,6 +66,7 @@ namespace API
 
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllers();
+				endpoints.MapHub<GeoHub>("/GeoHub");
 			});
 		}
 	}
