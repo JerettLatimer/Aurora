@@ -10,15 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace GEM
 {
 	public class TasksPageModel : PageModel
 	{
+		[Required]
 		[BindProperty]
 		public string GroupName { get; set; }
+		[Required]
 		[BindProperty]
 		public string TaskName { get; set; }
+		[Required]
 		[BindProperty]
 		public string Checkboxes { get; set; }
 

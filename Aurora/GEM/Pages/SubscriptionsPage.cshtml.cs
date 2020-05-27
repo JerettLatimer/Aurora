@@ -7,17 +7,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using GEM.Model;
 using System.Web;
 using Microsoft.Extensions.Primitives;
+using System.ComponentModel.DataAnnotations;
 
 namespace GEM
 {
     public class SubscriptionsPageModel : PageModel
     {
+        [Required]
         [BindProperty]
         public string FirstName { get; set; }
+        [Required]
         [BindProperty]
         public string LastName { get; set; }
+        [Required]
+        [EmailAddress]
         [BindProperty]
         public string Email { get; set; }
+        [Required]
         [BindProperty]
         public string GroupName { get; set; }
 

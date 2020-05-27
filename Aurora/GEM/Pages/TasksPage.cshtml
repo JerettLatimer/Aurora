@@ -35,7 +35,7 @@
 				<span class="menubar_label">Load Task</span>
 				<div class="dropdownGem closed taskList">
 					<div class="dropdownGem-title" id="taskDropdownButton">
-						<input asp-for="TaskName" class="selection taskSelection" type="text" />
+						<input asp-for="TaskName" class="selection taskSelection" type="text" required/>
 						<i class="fas fa-play dropdown-arrow taskArrow"></i>
 					</div>
 					<div class="dropdownGem-menu">
@@ -59,7 +59,7 @@
 			<span class="selectorDescription">Notify everybody in the subscription...</span>
 			<div class="dropdownGem closed subscriptionList">
 				<div class="dropdownGem-title" id="subscriptionDropdownButton">
-					<input asp-for="GroupName" class="selection subSelection" type="text" />
+					<input asp-for="GroupName" class="selection subSelection" type="text" required/>
 					<i class="fas fa-play dropdown-arrow subArrow"></i>
 				</div>
 				<div class="dropdownGem-menu">
