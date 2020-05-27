@@ -31,7 +31,7 @@
 				<span class="menubar_label">Load Subscription</span>
 				<div class="dropdownGem closed taskList">
 					<div class="dropdownGem-title" id="taskDropdownButton">
-						<input asp-for="GroupName" class="selection taskSelection" type="text" />
+						<input asp-for="GroupName" class="selection taskSelection" type="text" required/>
 						<i class="fas fa-play dropdown-arrow taskArrow"></i>
 					</div>
 					<div class="dropdownGem-menu">
@@ -48,11 +48,11 @@
 	</div>
 	<div class="form-inline" id="subscription">
 		<label asp-for="FirstName">First Name:</label>
-		<input type="text" id="firstName" placeholder="Enter first name" name="firstName" />
+		<input type="text" id="firstName" placeholder="Enter first name" name="firstName" required/>
 		<label asp-for="LastName">Last Name:</label>
-		<input type="text" id="lastName" placeholder="Enter last name" name="lastName" />
+		<input type="text" id="lastName" placeholder="Enter last name" name="lastName" required/>
 		<label asp-for="Email">Email:</label>
-		<input type="email" id="email" placeholder="Enter email" name="email" />
+		<input type="email" id="email" placeholder="Enter email" name="email" required/>
 
 		<button id="submit" type="submit">Submit</button>
 	</div>
