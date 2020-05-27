@@ -45,19 +45,9 @@ namespace API.Models
             // start the watch on the collection
             using (var cursor =  collection.Watch())
             {
-                 foreach(var change in cursor.ToEnumerable()) 
+                foreach(var change in cursor.ToEnumerable()) 
                 {
-                    using(var client = new HttpClient()) // ref: https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
-                    {
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        var values = new Dictionary<string, string>
-                        {
-                            { "thing1", "New" },
-                            { "thing2", "Data" }
-                        };
-                        var content = new FormUrlEncodedContent(values);
-                        var response = await client.GetAsync(new Uri("https://localhost:5001/"));
-                    }
+                    
                 }
             }
         }
