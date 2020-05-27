@@ -14,15 +14,18 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-
+using Microsoft.VisualBasic;
+using MongoDB.Driver;
 
 namespace API
 {
 	public class Startup
 	{
+		public static IServiceCollection service { get; set; }
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
+			Monitor.Application_Start();
 		}
 
 		public IConfiguration Configuration { get; }
@@ -36,8 +39,9 @@ namespace API
 			services.AddSingleton<IDatabaseSettings>(sp =>
 				sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
-			services.AddSingleton<GemService>();
+			service = services.AddSingleton<GemService>();
 
+			services.AddScoped<IGemService, GemService>();
 			services.AddControllers()
 				.AddNewtonsoftJson(options => options.UseMemberCasing());
 		}

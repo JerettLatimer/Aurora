@@ -23,6 +23,8 @@ namespace API.Services
 			_rawGeodata = database.GetCollection<Geodata>(settings.Geodata_CollectionName);
 		}
 
+
+
 		public async Task<List<Geodata>> Get()
 		{
 			var results = await PipelineDefinitionBuilder(_rawGeodata);

@@ -18,35 +18,33 @@ namespace GEM.Model
 		#endregion
 
 		#region Constructor
-		public Notifier(Task task)
+		public Notifier(Task task, List<Geodata> changedData)
 		{
 			_task = task;
-			BuildBody();
+			BuildBody(changedData);
+			SendNotification();
 		}
 		#endregion
 
 
 		#region Methods
-		public void BuildBody()
+		public void BuildBody(List<Geodata> changedData)
 		{
-			var OldGeo = _task.OutdatedSurvey.GetType();
-			var NewGeo = _task.UpdatedSurvey.GetType();
-
-			_task.MessageBody.Append(string.Format("<span {0}>You are receiving this email because a task in the {1} subscription profile has reported a change in one or more of its monitored fields: \n", _bodyStyle, _task.SubscriptionGroup.GroupName));
+			_task.MessageBody.Append(string.Format("<span {0}> A task in the {1} subscription profile has reported a change in one or more of its monitored fields: \n", _bodyStyle, _task.SubscriptionGroup.GroupName));
 			foreach (string rule in _task.SelectedRules)
 			{
-				_task.MessageBody.Append(string.Format("\t{0}:\n", rule));
-				foreach (var newSite in Fetcher.Survey.Sites)
+				foreach (var updatedData in changedData)
 				{
-					var oldSite = _task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
-					if (!oldSite.GetType().GetProperty(rule).Equals(newSite.GetType().GetProperty(rule)))
+					var outdatedData = _task.OutdatedSurvey.Sites.Find(site => site.name == updatedData.name);
+					if (!outdatedData.GetType().GetProperty(rule).Equals(updatedData.GetType().GetProperty(rule)))
 					{
-						_task.MessageBody.Append(string.Format("\t\t{0} changed from \"{1}\" to \"{2}\"\n", newSite.name, oldSite.GetType().GetProperty(rule), newSite.GetType().GetProperty(rule)));
+						_task.MessageBody.Append(string.Format("\t{0}:\n", rule));
+						_task.MessageBody.Append(string.Format("\t\t{0} has changed from \"{1}\" to \"{2}\"\n", updatedData.name, outdatedData.GetType().GetProperty(rule), updatedData.GetType().GetProperty(rule)));
 					}
 				}
 				_task.MessageBody.Append(string.Format("\n"));
 			}
-			_task.MessageBody.Append(string.Format("</span>"));
+			_task.MessageBody.Append(string.Format("</span>\n"));
 		}
 
 		public void SendNotification()
@@ -73,7 +71,7 @@ namespace GEM.Model
 
 			Message.Attachments.Add(_logo);
 			_logo.ContentId = _logo.GetHashCode().ToString();
-			Message.Body = string.Format("<h1 {0}><img src =\"cid:{1}\"height=34/> Geodata Event Notification</h1>{2}", _headerStyle, _attachment.ContentId, Message.Body);
+			Message.Body = string.Format("<h1 {0}><img src =\"cid:{1}\"height=34/> Geodata Event Notification</h1>{2}", _headerStyle, _logo.ContentId, Message.Body);
 
 			foreach (Subscriber user in _task.SubscriptionGroup.Subscribers) {
 				Message.To.Add(new MailAddress(user.UserEmail, user.UserName));

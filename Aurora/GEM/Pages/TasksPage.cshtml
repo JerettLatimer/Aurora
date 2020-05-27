@@ -13,94 +13,98 @@
 
 
 <!-- TASK MENUBAR -->
-<div class="task_menubar">
-	<div class="menubar_createColumn column">
-		<!--<input class="createColumn_neworcancelButton" id="newTask" type="button" name="createOrCancel" value="New Task" />-->
-		<input class="createColumn_neworcancelButton" id="cancelTask" type="button" name="createOrCancel" value="Cancel Task" />
-	</div>
-	<div class="newTaskParameters column">
-		<div class="menubar_tasknameColumn">
-			<span class="menubar_label">Task Name</span>
-			<input class="tasknameColumn_inputName" type="text" name="createOrCancel" value="" placeholder="" />
+<form method="post">
+	<div class="task_menubar">
+
+		<div class="menubar_createColumn column">
+			<!--<input class="createColumn_neworcancelButton" id="newTask" type="button" name="createOrCancel" value="New Task" />-->
+			<input class="createColumn_neworcancelButton" id="cancelTask" type="button" name="createOrCancel" value="Cancel Task" />
 		</div>
-		<div class="menubar_saveColumn">
-			<button class="saveColumn_button" name="createOrCancel" type="button" value="save" onclick="">save</button>
+		<div class="newTaskParameters column">
+			<div class="menubar_tasknameColumn">
+				<span class="menubar_label">Task Name</span>
+				<input class="tasknameColumn_inputName" type="text" name="createOrCancel" value="" placeholder="" />
+			</div>
+			<div class="menubar_saveColumn">
+				<button class="saveColumn_button" name="createOrCancel" type="submit" value="save" onclick="submitHandler();">save</button>
+				<input asp-for="Checkboxes" type="hidden" value="" id="input_hidden_field_arr" />
+			</div>
+		</div>
+		<div class="menubar_tasklistColumn column">
+			<div class="tasklistColumn_container">
+				<span class="menubar_label">Load Task</span>
+				<div class="dropdownGem closed taskList">
+					<div class="dropdownGem-title" id="taskDropdownButton">
+						<input asp-for="TaskName" class="selection taskSelection" type="text" />
+						<i class="fas fa-play dropdown-arrow taskArrow"></i>
+					</div>
+					<div class="dropdownGem-menu">
+						<ul class="dropdownUL taskUL">
+							@foreach (GEM.Model.Task task in Fetcher._DEMO_TASKS) {
+								<li class="taskLI">@task.TaskName</li>
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="menubar_tasklistColumn column">
-		<div class="tasklistColumn_container">
-			<span class="menubar_label">Load Task</span>
-			<div class="dropdownGem closed taskList">
-				<div class="dropdownGem-title" id="taskDropdownButton">
-					<span class="selection taskSelection"></span>
-					<i class="fas fa-play dropdown-arrow taskArrow"></i>
+
+
+
+	<!-- RULE BOARD -->
+	<div class="task_baseboard">
+		<!-- Subscription Selector -->
+		<div class="subSelectorContainer">
+			<span class="selectorDescription">Notify everybody in the subscription...</span>
+			<div class="dropdownGem closed subscriptionList">
+				<div class="dropdownGem-title" id="subscriptionDropdownButton">
+					<input asp-for="GroupName" class="selection subSelection" type="text" />
+					<i class="fas fa-play dropdown-arrow subArrow"></i>
 				</div>
 				<div class="dropdownGem-menu">
-					<ul class="dropdownUL taskUL">
-						@foreach (GEM.Model.Task task in Model.DEMOTASKS) {
-							<li class="taskLI">@task.TaskName</li>
+					<ul class="dropdownUL subUL">
+						@foreach (GEM.Model.Subscription sub in Fetcher._DEMO_SUBSCRIPTIONS) {
+							<li class="subLI">@sub.GroupName</li>
 						}
 					</ul>
 				</div>
 			</div>
 		</div>
+		<!-- Rules -->
+		@{BuildRules();}
 	</div>
-
-</div>
-
-
-
-<!-- RULE BOARD -->
-<div class="task_baseboard">
-	<!-- Subscription Selector -->
-	<div class="subSelectorContainer">
-		<span class="selectorDescription">Notify everybody in the subscription...</span>
-		<div class="dropdownGem closed subscriptionList">
-			<div class="dropdownGem-title" id="subscriptionDropdownButton">
-				<span class="selection subSelection"></span>
-				<i class="fas fa-play dropdown-arrow subArrow"></i>
-			</div>
-			<div class="dropdownGem-menu">
-				<ul class="dropdownUL subUL">
-					@foreach (GEM.Model.Subscription sub in Model.DEMOSUBSCRIPTIONS) {
-						<li class="subLI">@sub.GroupName</li>
-					}
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!-- Rules -->
-	@{BuildRules();}
-</div>
+</form>
 
 @functions {
 	void BuildRules()
 	{
 		<div class="rulesContainer">
-			@foreach (PropertyInfo property in Model.SITE.Properties) {
-			<!-- RULE ROWS -->
-			<div class="rule_row">
-				<input class="rule_select rule@(property.Name)" type="checkbox" onclick="toggleConditions(`@property.Name`)" />
-				<div class="rule_body">
-					<fieldset class="rule_set">
-						<span>if</span>
-						<input class="fieldName" type="text" value="@property.Name" readonly />
-						<label class="fieldCondition condition@(property.Name)">
-							<input class="radioCondition" type="radio" name="@property.Name" checked/>
-							<i class="far fa-circle"></i>
-							<i class="fas fa-circle"></i>
-							changes
-						</label>
-						<label class="fieldCondition condition@(property.Name)">
-							<input class="radioCondition" type="radio" name="@property.Name" />
-							<i class="far fa-circle"></i>
-							<i class="fas fa-circle"></i>
-							is
-						</label>
-					</fieldset>
+			@foreach (PropertyInfo property in Fetcher.Survey.Properties) {
+				<!-- RULE ROWS -->
+				<div class="rule_row">
+					<input class="rule_select rule@(property.Name)" type="checkbox" value="@property.Name" onclick="toggleConditions(`@property.Name`)" />
+					<div class="rule_body">
+						<fieldset class="rule_set">
+							<span>if</span>
+							<input class="fieldName" type="text" value="@property.Name" readonly />
+							<label class="fieldCondition condition@(property.Name)">
+								<input class="radioCondition" type="radio" name="@property.Name" checked />
+								<i class="far fa-circle"></i>
+								<i class="fas fa-circle"></i>
+								changes
+							</label>
+							<label class="fieldCondition condition@(property.Name)">
+								<input class="radioCondition" type="radio" name="@property.Name" />
+								<i class="far fa-circle"></i>
+								<i class="fas fa-circle"></i>
+								is
+							</label>
+						</fieldset>
+					</div>
 				</div>
-			</div>
 			}
 		</div>
 	}
 }
+
