@@ -14,7 +14,6 @@ namespace GEM.Model
 		#region Properties
 		private readonly Task _task;
 		private readonly Attachment _logo = new Attachment(@"wwwroot/logo.png");
-		private readonly string _headerStyle = "style=\"background-color: white; z-index: 99;\"";
 		private readonly string _bodyStyle = "style=\"font-family: 'Segoe UI'; font-weight: 300; color: #848484;\"";
 		#endregion
 
@@ -31,23 +30,26 @@ namespace GEM.Model
 		public void BuildBody()
 		{
 			var message = new StringBuilder();
-			message.Append(string.Format("<span {0}> A task in the {1} subscription profile has reported a change in one or more of its monitored fields: \n\n", _bodyStyle, _task.SubscriptionGroup.GroupName));
+			message.Append(string.Format("<span {0}>Task \"{1}\" in the {2} subscription profile has reported a change in one or more of its monitored fields: \n\n", _bodyStyle, _task.TaskName, _task.SubscriptionGroup.GroupName));
 			
 			var hasChanges = false;
-			foreach (string rule in _task.SelectedRules)
+			foreach (var newSite in _task.UpdatedSurvey.Sites)
 			{
-				foreach (var newSite in _task.UpdatedSurvey.Sites)
+				message.Append(string.Format("<div><h2>Site {0}:</h2>", newSite.name));
+				var oldSite = _task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
+				foreach (string rule in _task.SelectedRules)
 				{
-					var oldSite = _task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
 					var outdatedData = oldSite.GetType().GetProperty(rule).GetValue(oldSite, null);
 					var updatedData = newSite.GetType().GetProperty(rule).GetValue(newSite, null);
+
 					if (!outdatedData.Equals(updatedData))
 					{
 						message.Append(string.Format("<p>{0}:</p>", rule));
-						message.Append(string.Format("<p>{0} has changed from \"{1}\" to \"{2}\"</p>", newSite.name, outdatedData, updatedData));
+						message.Append(string.Format("<p>Changed from \"{0}\" to \"{1}\"</p>", outdatedData, updatedData));
 						hasChanges = true;
 					}
 				}
+				message.Append(string.Format("</div>"));
 			}
 			message.Append(string.Format("</span>"));
 
@@ -82,7 +84,7 @@ namespace GEM.Model
 
 			Message.Attachments.Add(_logo);
 			_logo.ContentId = _logo.GetHashCode().ToString();
-			Message.Body = string.Format("<h1 {0}><img src =\"cid:{1}\"height=34/> Geodata Event Notification</h1>{2}", _headerStyle, _logo.ContentId, Message.Body);
+			Message.Body = string.Format("<h1><img src =\"cid:{1}\"height=34/> Geodata Event Notification</h1>{2}", _headerStyle, _logo.ContentId, Message.Body);
 
 			foreach (Subscriber user in _task.SubscriptionGroup.Subscribers) {
 				Message.Bcc.Add(new MailAddress(user.UserEmail, user.UserName));

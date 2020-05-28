@@ -22,7 +22,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GEM.Model
 {
-
     public static class Tasker
     {
         #region Properties
@@ -79,10 +78,10 @@ namespace GEM.Model
             Fetcher.GetGeodataListAsync();
             task.UpdatedSurvey = Fetcher.Survey;
             PassTaskToNotifier(task);
+
         }
 
         internal static void PassTaskToNotifier(Task task) => new Notifier(task);
     }
     #endregion
-
 }
