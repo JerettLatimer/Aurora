@@ -78,33 +78,10 @@ namespace GEM.Model
             task.OutdatedSurvey = task.UpdatedSurvey;
             Fetcher.GetGeodataListAsync();
             task.UpdatedSurvey = Fetcher.Survey;
-
-            var changedData = GetChangedData(task);
-            if (changedData.Count > 0)
-            {
-                PassTaskToNotifier(task, changedData);
-            }
+            PassTaskToNotifier(task);
         }
 
-        private static List<Geodata> GetChangedData(Task task) {
-            var changedData = new List<Geodata>();
-
-            foreach (string rule in task.SelectedRules)
-			{
-				foreach (var newSite in task.UpdatedSurvey.Sites)
-				{
-					var oldSite = task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
-					if (!oldSite.GetType().GetProperty(rule).Equals(newSite.GetType().GetProperty(rule)))
-					{
-                        changedData.Add(newSite);
-					}
-				}
-			}
-            return changedData;
-        }
-
-
-        internal static void PassTaskToNotifier(Task task, List<Geodata> changedData) => new Notifier(task, changedData);
+        internal static void PassTaskToNotifier(Task task) => new Notifier(task);
     }
     #endregion
 

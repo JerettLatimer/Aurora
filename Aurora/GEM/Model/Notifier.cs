@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Text;
 
 namespace GEM.Model
 {
@@ -18,36 +19,46 @@ namespace GEM.Model
 		#endregion
 
 		#region Constructor
-		public Notifier(Task task, List<Geodata> changedData)
+		public Notifier(Task task)
 		{
 			_task = task;
-			BuildBody(changedData);
-			SendNotification();
+			BuildBody();
 		}
 		#endregion
 
 
 		#region Methods
-		public void BuildBody(List<Geodata> changedData)
+		public void BuildBody()
 		{
-			_task.MessageBody.Append(string.Format("<span {0}> A task in the {1} subscription profile has reported a change in one or more of its monitored fields: \n", _bodyStyle, _task.SubscriptionGroup.GroupName));
+			var message = new StringBuilder();
+			message.Append(string.Format("<span {0}> A task in the {1} subscription profile has reported a change in one or more of its monitored fields: \n\n", _bodyStyle, _task.SubscriptionGroup.GroupName));
+			
+			var hasChanges = false;
 			foreach (string rule in _task.SelectedRules)
 			{
-				foreach (var updatedData in changedData)
+				foreach (var newSite in _task.UpdatedSurvey.Sites)
 				{
-					var outdatedData = _task.OutdatedSurvey.Sites.Find(site => site.name == updatedData.name);
-					if (!outdatedData.GetType().GetProperty(rule).Equals(updatedData.GetType().GetProperty(rule)))
+					var oldSite = _task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
+					var outdatedData = oldSite.GetType().GetProperty(rule).GetValue(oldSite, null);
+					var updatedData = newSite.GetType().GetProperty(rule).GetValue(newSite, null);
+					if (!outdatedData.Equals(updatedData))
 					{
-						_task.MessageBody.Append(string.Format("\t{0}:\n", rule));
-						_task.MessageBody.Append(string.Format("\t\t{0} has changed from \"{1}\" to \"{2}\"\n", updatedData.name, outdatedData.GetType().GetProperty(rule), updatedData.GetType().GetProperty(rule)));
+						message.Append(string.Format("<p>{0}:</p>", rule));
+						message.Append(string.Format("<p>{0} has changed from \"{1}\" to \"{2}\"</p>", newSite.name, outdatedData, updatedData));
+						hasChanges = true;
 					}
 				}
-				_task.MessageBody.Append(string.Format("\n"));
 			}
-			_task.MessageBody.Append(string.Format("</span>\n"));
+			message.Append(string.Format("</span>"));
+
+			if (hasChanges)
+			{
+				_task.MessageBody = message;
+				SendNotification();
+			}
 		}
 
-		public void SendNotification()
+		private void SendNotification()
 		{
 			// TODO: this data will need to be abstracted out to a seperate file like out DatabaseSettings class int he API that uses the appsettings.json
 			var Client = new SmtpClient() {
@@ -74,7 +85,7 @@ namespace GEM.Model
 			Message.Body = string.Format("<h1 {0}><img src =\"cid:{1}\"height=34/> Geodata Event Notification</h1>{2}", _headerStyle, _logo.ContentId, Message.Body);
 
 			foreach (Subscriber user in _task.SubscriptionGroup.Subscribers) {
-				Message.To.Add(new MailAddress(user.UserEmail, user.UserName));
+				Message.Bcc.Add(new MailAddress(user.UserEmail, user.UserName));
 			}
 
 			try	{
