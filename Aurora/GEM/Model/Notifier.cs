@@ -35,7 +35,7 @@ namespace GEM.Model
 			var hasChanges = false;
 			foreach (var newSite in _task.UpdatedSurvey.Sites)
 			{
-				message.Append(string.Format("<div><h2>Site {0}:</h2>", newSite.name));
+				message.Append(string.Format("<div><h3>Site {0}:</h3>", newSite.name));
 				var oldSite = _task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
 				foreach (string rule in _task.SelectedRules)
 				{
@@ -44,8 +44,7 @@ namespace GEM.Model
 
 					if (!outdatedData.Equals(updatedData))
 					{
-						message.Append(string.Format("<p>{0}:</p>", rule));
-						message.Append(string.Format("<p>Changed from \"{0}\" to \"{1}\"</p>", outdatedData, updatedData));
+						message.Append(string.Format("<p>Field {0} changed from \"{1}\" to \"{2}\"</p>", rule, outdatedData, updatedData));
 						hasChanges = true;
 					}
 				}
@@ -84,7 +83,7 @@ namespace GEM.Model
 
 			Message.Attachments.Add(_logo);
 			_logo.ContentId = _logo.GetHashCode().ToString();
-			Message.Body = string.Format("<h1><img src =\"cid:{1}\"height=34/> Geodata Event Notification</h1>{2}", _headerStyle, _logo.ContentId, Message.Body);
+			Message.Body = string.Format("<h1><img src =\"cid:{0}\"height=34/> Geodata Event Notification</h1>{1}", _logo.ContentId, Message.Body);
 
 			foreach (Subscriber user in _task.SubscriptionGroup.Subscribers) {
 				Message.Bcc.Add(new MailAddress(user.UserEmail, user.UserName));
