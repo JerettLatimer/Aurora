@@ -9,14 +9,32 @@ namespace GEM.Model
 {
 
 
-	public class Site
+	public class Site : ICloneable
 	{
+		#region Properties
 		public List<Geodata> Sites { get; set; } = new List<Geodata>();
+		public List<PropertyInfo> Properties { get; set; } = new List<PropertyInfo>(new Geodata().GetType().GetProperties().ToList());
+		#endregion
 
+		#region Indexers
 		public Geodata this[string siteName] => Sites.Find(geodata => siteName == geodata.name);
 		public Geodata this[int index] => Sites.ElementAtOrDefault(index);
+		#endregion
 
-		public List<PropertyInfo> Properties { get; set; } = new List<PropertyInfo>(new Geodata().GetType().GetProperties().ToList());
+		#region Constructor
+		protected Site(Site clone)
+		{
+			Sites = clone.Sites;
+			Properties = clone.Properties;
+		}
+
+		public Site()
+		{
+
+		}
+		#endregion
+
+		public object Clone() => new Site(this);
 	}
 
 	public class Geodata

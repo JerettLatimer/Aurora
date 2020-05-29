@@ -31,34 +31,9 @@ namespace GEM.Model
 
 
         #region Methods
-        internal static void Application_Start() => new Thread(() => watchForChanges()).Start();
+        internal static void Application_Start() => new Thread(() => WatchForChanges()).Start();
 
-/*        public static void StartApiWatch()
-        {
-            string[] prefixes = { "https://localhost:25/" };
-            if (!HttpListener.IsSupported)
-            {
-                Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
-                return;
-            }
-            if (prefixes == null || prefixes.Length == 0)
-                throw new ArgumentException("prefixes");
-
-            HttpListener listener = new HttpListener();
-            foreach (string s in prefixes)
-            {
-                listener.Prefixes.Add(s);
-            }
-            listener.Start();
-            IAsyncResult result = listener.BeginGetContext(new AsyncCallback(ListenerCallback),listener);
-            Console.WriteLine("Waiting for request to be processed asyncronously.");
-            result.AsyncWaitHandle.WaitOne();
-            Console.WriteLine("Request processed asyncronously.");
-            listener.Close();
-        }*/
-
-
-        public static void watchForChanges()
+        public static void WatchForChanges()
         {
             var pipeline = new EmptyPipelineDefinition<Geodata>().Match("{ operationType: { $eq: 'update' } }");
             var client = new MongoClient("mongodb+srv://Fetcher:nvZUzMHPqnpX50kj@aurora-pjpea.azure.mongodb.net/test?retryWrites=true&w=majority");
@@ -75,26 +50,12 @@ namespace GEM.Model
 
         }
 
-        private static void ListenerCallback(IAsyncResult result)
+        private static async void UpdateSurvey()
         {
-            HttpListener listener = (HttpListener) result.AsyncState;
-            HttpListenerContext context = listener.EndGetContext(result);
-            HttpListenerRequest request = context.Request;
-            HttpListenerResponse response = context.Response;
-            string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-            response.ContentLength64 = buffer.Length;
-            System.IO.Stream output = response.OutputStream;
-            output.Write(buffer, 0, buffer.Length);
-            output.Close();
-            UpdateSurvey();
-        }
-
-        private static void UpdateSurvey()
-        {
-            var task = _tasks.First<Task>();
-            task.OutdatedSurvey = task.UpdatedSurvey;
-            Fetcher.GetGeodataListAsync(); // not getting second pull for updated I don't know why
+            var task = _tasks.First();
+            
+            task.OutdatedSurvey = (Site)task.UpdatedSurvey.Clone();
+            Fetcher.Survey.Sites = await Fetcher.GetGeodataListAsync();
             task.UpdatedSurvey = Fetcher.Survey;
             PassTaskToNotifier(task);
 

@@ -35,7 +35,7 @@ namespace GEM.Model
 			var hasChanges = false;
 			foreach (var newSite in _task.UpdatedSurvey.Sites)
 			{
-				message.Append(string.Format("<div><h3>Site {0}:</h3>", newSite.name));
+				
 				var oldSite = _task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
 				foreach (string rule in _task.SelectedRules)
 				{
@@ -44,11 +44,13 @@ namespace GEM.Model
 
 					if (!outdatedData.Equals(updatedData))
 					{
+						message.Append(string.Format("<div><h3>Site {0}:</h3>", newSite.name));
 						message.Append(string.Format("<p>Field {0} changed from \"{1}\" to \"{2}\"</p>", rule, outdatedData, updatedData));
+						message.Append(string.Format("</div>"));
 						hasChanges = true;
 					}
 				}
-				message.Append(string.Format("</div>"));
+				
 			}
 			message.Append(string.Format("</span>"));
 
