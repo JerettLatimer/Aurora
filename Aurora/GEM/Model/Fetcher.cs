@@ -11,7 +11,7 @@ using API.Controllers;
 using API.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GEM.Model
 {
@@ -31,7 +31,7 @@ namespace GEM.Model
 		public static async Task<List<Geodata>> GetGeodataListAsync()
 		{
 			RunAsync();
-			HttpResponseMessage response = await _client.GetAsync("api/Gem");
+			HttpResponseMessage response = await _client.GetAsync("api/Gem");//timeout error occurs here on second iteration
 			_client.Dispose();
 
 			return await response.Content.ReadAsAsync<List<Geodata>>();
