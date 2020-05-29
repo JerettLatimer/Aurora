@@ -26,13 +26,14 @@ namespace GEM.Model
     {
         #region Properties
         public static List<Task> _tasks = Fetcher._DEMO_TASKS;
+        private static IMongoCollection<Geodata> collection;
         #endregion
 
 
         #region Methods
-        internal static void Application_Start() => new Thread(() => StartApiWatch()).Start();
+        internal static void Application_Start() => new Thread(() => watchForChanges()).Start();
 
-        public static void StartApiWatch()
+/*        public static void StartApiWatch()
         {
             string[] prefixes = { "https://localhost:25/" };
             if (!HttpListener.IsSupported)
@@ -54,6 +55,24 @@ namespace GEM.Model
             result.AsyncWaitHandle.WaitOne();
             Console.WriteLine("Request processed asyncronously.");
             listener.Close();
+        }*/
+
+
+        public static void watchForChanges()
+        {
+            var pipeline = new EmptyPipelineDefinition<Geodata>().Match("{ operationType: { $eq: 'update' } }");
+            var client = new MongoClient("mongodb+srv://Fetcher:nvZUzMHPqnpX50kj@aurora-pjpea.azure.mongodb.net/test?retryWrites=true&w=majority");
+            var database = client.GetDatabase("GEM");
+            collection = database.GetCollection<Geodata>("Geodata");
+
+            using (var cursor = collection.Watch())
+            {
+                foreach (var change in cursor.ToEnumerable())
+                {
+                    UpdateSurvey();
+                }
+            }
+
         }
 
         private static void ListenerCallback(IAsyncResult result)
@@ -75,7 +94,7 @@ namespace GEM.Model
         {
             var task = _tasks.First<Task>();
             task.OutdatedSurvey = task.UpdatedSurvey;
-            Fetcher.GetGeodataListAsync();
+            Fetcher.GetGeodataListAsync(); // not getting second pull for updated I don't know why
             task.UpdatedSurvey = Fetcher.Survey;
             PassTaskToNotifier(task);
 
