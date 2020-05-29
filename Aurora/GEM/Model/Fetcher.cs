@@ -11,7 +11,7 @@ using API.Controllers;
 using API.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GEM.Model
 {
@@ -27,20 +27,15 @@ namespace GEM.Model
 
 
 		// TODO: this is what should be triggered when API signals to Fetcher that a Get to the API is needed
-		public static async void GetGeodataListAsync()
+		public static async Task GetGeodataListAsync()
 		{
 			RunAsync();
-			HttpResponseMessage response = await _client.GetAsync("api/Gem");
+			HttpResponseMessage response = await _client.GetAsync("api/Gem");//timeout error occurs here on second iteration
 			_client.Dispose();
+			
+			Survey.Sites = await response.Content.ReadAsAsync<List<Geodata>>();
+			
 
-			// 200
-			if (response.IsSuccessStatusCode) {
-				Survey.Sites = await response.Content.ReadAsAsync<List<Geodata>>();
-			}
-			else {
-				// TODO: Need to handle case where a valid response is not recieved.
-				throw new HttpRequestException("404 Error Occurred");
-			}
 		}
 
 		/* DEMO */

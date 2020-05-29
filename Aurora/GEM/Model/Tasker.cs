@@ -31,7 +31,7 @@ namespace GEM.Model
 
 
         #region Methods
-        internal static void Application_Start() => new Thread(() => watchForChanges()).Start();
+        internal static void Application_Start() => WatchForChanges();
 
 /*        public static void StartApiWatch()
         {
@@ -58,7 +58,7 @@ namespace GEM.Model
         }*/
 
 
-        public static void watchForChanges()
+        public static void WatchForChanges()
         {
             var pipeline = new EmptyPipelineDefinition<Geodata>().Match("{ operationType: { $eq: 'update' } }");
             var client = new MongoClient("mongodb+srv://Fetcher:nvZUzMHPqnpX50kj@aurora-pjpea.azure.mongodb.net/test?retryWrites=true&w=majority");
@@ -90,11 +90,11 @@ namespace GEM.Model
             UpdateSurvey();
         }
 
-        private static void UpdateSurvey()
+        private static async void UpdateSurvey()
         {
             var task = _tasks.First<Task>();
             task.OutdatedSurvey = task.UpdatedSurvey;
-            Fetcher.GetGeodataListAsync(); // not getting second pull for updated I don't know why
+            await Fetcher.GetGeodataListAsync(); // not getting second pull for updated I don't know why
             task.UpdatedSurvey = Fetcher.Survey;
             PassTaskToNotifier(task);
 

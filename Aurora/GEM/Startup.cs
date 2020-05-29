@@ -21,6 +21,7 @@ namespace Aurora
 	public class Startup
 	{
 		#region Fields
+		public bool flag = false;
 		#endregion
 
 		#region Properties
