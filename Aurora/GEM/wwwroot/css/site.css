@@ -33,6 +33,10 @@ label {
     margin-bottom: 0;
 }
 
+form {
+    display: contents;
+}
+
 ul {
     background: white;
     list-style: none;
@@ -44,11 +48,10 @@ a.navbar-brand {
     word-break: break-all;
 }
 
-.line {
-    width: auto;
-    height: 3px;
-    background-color: rgb(220, 255, 0);
+.navbar-nav .nav-link {
+    padding-left: 12px;
 }
+
 
 /* Provide sufficient contrast against white background */
 a {
@@ -65,6 +68,20 @@ a {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+@media only screen and (max-width: 575px) {
+    .nav-link {
+        padding-left: 20px !important;
+        text-align: left;
+    }
+}
+
+.navbar-toggler {
+    outline: none;
+}
+.navbar-toggler:focus {
+    outline: none;
 }
 
 /* Sticky footer styles
@@ -145,6 +162,12 @@ body {
     background-repeat: no-repeat;
     background-size: calc(100% - 16px) 2px;
     background-position: bottom;
+}
+@media only screen and (max-width: 575px) {
+    .text-dark:hover {
+        background-position: left;
+        background-size: 2px calc(100% - 16px);
+    }
 }
 
 
@@ -244,7 +267,7 @@ i.fas.fa-play.dropdown-arrow {
     height: 50px;
     align-items: flex-end;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .task_menubar {
         flex-direction: column;
         height: auto;
@@ -256,7 +279,7 @@ i.fas.fa-play.dropdown-arrow {
 .column {
     margin: 10px;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .column {
         margin: 0;
     }
@@ -268,7 +291,7 @@ i.fas.fa-play.dropdown-arrow {
     justify-content: center;
     height: 100%;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .menubar_createColumn {
         width: 100%;
         justify-content: flex-start;
@@ -289,7 +312,7 @@ i.fas.fa-play.dropdown-arrow {
     color: #d40047;
     transition: all 0.2s ease-in;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .createColumn_neworcancelButton {
         text-align: center;
         padding-left: 0;
@@ -301,7 +324,7 @@ i.fas.fa-play.dropdown-arrow {
     width: 100%;
     height: 100%;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .newTaskParameters {
         height: auto;
         justify-items: flex-start;
@@ -315,7 +338,7 @@ i.fas.fa-play.dropdown-arrow {
     flex-direction: column;
     margin: 0px 10px 0px 10px;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .menubar_tasknameColumn {
         margin-left: 0;
     }
@@ -323,13 +346,15 @@ i.fas.fa-play.dropdown-arrow {
 
 .menubar_label {
     font-size: small;
+    height: 18px;
 }
 
 .tasknameColumn_inputName {
     border-radius: 5px;
     border: 1px solid #A4A4A4;
-    height: 30px;
+    height: 32px;
     background: white;
+    padding: 1px 5px;
 }
 .tasknameColumn_inputName:focus {
     outline-color: rgb(223, 255, 171);
@@ -363,7 +388,7 @@ i.fas.fa-play.dropdown-arrow {
     font-weight: 700;
     color: white;
     width: 70px;
-    height: 30px;
+    height: 32px;
     position: relative;
     left: -20%;
     transition: all 0.3s ease-in;
@@ -394,7 +419,7 @@ background--blend-mode: normal;*/
     align-items: flex-end;
     height: 100%;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .menubar_tasklistColumn {
         align-items: flex-start;
         height: auto;
@@ -402,7 +427,7 @@ background--blend-mode: normal;*/
 }
 
 .tasklistColumn_container {
-    width: 50%;
+    width: calc(50% + 60px);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -427,7 +452,7 @@ background--blend-mode: normal;*/
 }
 
 #taskDropdownButton {
-    height: 30px;
+    height: 32px;
     width: 100%;
     background: white;
     border-radius: 5px;
@@ -437,7 +462,7 @@ background--blend-mode: normal;*/
     display: inline-flex;
     justify-content: space-between;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     #taskDropdownButton {
         align-items: center;
     }
@@ -449,6 +474,11 @@ background--blend-mode: normal;*/
     text-align: center;
     width: 100%;
     user-select: none;
+    border: none;
+    margin: 0px 0px 0px 5px;
+    height: 30px;
+    align-self: center;
+    outline: none;
 }
 
 .taskArrow {
@@ -501,7 +531,7 @@ background--blend-mode: normal;*/
     box-shadow: 0 0 14px rgba(100,100,100,0.3);
     transition: box-shadow 0.5s ease-in;
 }
-@media only screen and (max-device-width: 400px) {
+@media only screen and (max-width: 575px) {
     .subscriptionList {
         width: 100%;
         min-width: unset;
@@ -524,9 +554,13 @@ background--blend-mode: normal;*/
 .subSelection {
     color: black;
     font-size: 36px;
+    font-weight: 300;
     text-align: center;
     width: 100%;
     user-select: none;
+    border: none;
+    margin: 0px 0px 0px 10px;
+    outline: none;
 }
 
 .subArrow {
