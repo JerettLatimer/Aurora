@@ -25,7 +25,7 @@ namespace API
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
-			Monitor.Application_Start();
+			//Monitor.Application_Start();
 		}
 
 		public IConfiguration Configuration { get; }
@@ -52,7 +52,6 @@ namespace API
 			if (env.IsDevelopment()) {
 				app.UseDeveloperExceptionPage();
 			}
-
 			app.UseHttpsRedirection();
 
 			app.UseRouting();

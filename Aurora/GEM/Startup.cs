@@ -21,6 +21,7 @@ namespace Aurora
 	public class Startup
 	{
 		#region Fields
+		public bool flag = false;
 		#endregion
 
 		#region Properties
@@ -41,16 +42,14 @@ namespace Aurora
 
 		#region Methods
 		/* DEMO TEMPLATE METHOD */
-		private void LaunchMockScenario()
+		private async void LaunchMockScenario()
 		{
-			// TODO: steps to create 3 Subscription Profiles (Manager, Technician, Analyst), 1 Task (DemoTask), 1 Fetcher at startup so that Fetcher
-
 			// 1: Start initial pull of Geodata from MongoDB (Mocks the event that API will trigger to make a 'Get' to API)
-			Fetcher.GetGeodataListAsync();
+			Fetcher.Survey.Sites = await Fetcher.GetGeodataListAsync();
 			// 2: Create Mock Subscriptions and Task data (Mocks the reading of all Subscriptions in collection and all Tasks in collection)
 			Fetcher.DEMO_CREATEMOCKOBJECTS();
-			// 3: Call WatchApi
-			//Tasker.Application_Start();
+			// 3: Call Change Stream for MongoDB that will execute Notifier if changes made
+			Tasker.Application_Start();
 		}
 		/**/
 
