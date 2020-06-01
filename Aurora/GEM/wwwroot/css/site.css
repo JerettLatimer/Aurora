@@ -1,8 +1,11 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-/*@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css") html {
-    overflow-y: auto;
-}*/
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+    height: 0px;
+}
 
 .footer {
     background-color: white;
@@ -18,9 +21,24 @@ body {
     background-color: white;
 }
 
+div::selection {
+    background: rgb(220, 255, 0);
+}
+
+h1::selection {
+    background: rgb(220, 255, 0);
+}
+
 p {
     font-family: 'Segoe UI';
     font-weight: 300;
+}
+p::selection {
+    background: rgb(220, 255, 0);
+}
+
+em::selection {
+    background: rgb(220, 255, 0);
 }
 
 span {
@@ -28,9 +46,23 @@ span {
     font-weight: 300;
     color: #848484;
 }
+span::selection {
+    user-select: none;
+}
 
 label {
     margin-bottom: 0;
+}
+label::selection {
+    user-select: none;
+}
+
+button::selection {
+    user-select: none;
+}
+
+input::selection {
+    background: rgb(220, 255, 0);
 }
 
 form {
@@ -55,7 +87,19 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
+}
+a:not(.text-dark) {
+    color: #794cff;
+    transition: all 0.5s ease-in;
+}
+a::selection {
+    background: rgb(220, 255, 0);
+}
+a:not(.nav-link.text-dark):hover {
+    color: #00bcde;
+    transition: all 0.5s ease-out;
+    text-decoration: none;
 }
 
 .btn-primary {
@@ -169,6 +213,54 @@ body {
         background-size: 2px calc(100% - 16px);
     }
 }
+
+a.nav-link.text-dark::selection {
+    background: transparent;
+}
+
+svg {
+    user-select: none;
+}
+/*.aurora:hover {
+    animation: aurora 30s infinite linear;
+}
+@keyframes aurora {
+    0% {
+        fill: #00dffe;
+    }
+
+    10% {
+        fill: #00fec8;
+    }
+
+    20% {
+        fill: #6cff07;
+    }
+
+    30% {
+        fill: #e7ff97;
+    }
+
+    50% {
+        fill: #FF00EE;
+    }
+
+    70% {
+        fill: #b8ffad;
+    }
+
+    80% {
+        fill: #08fb32;
+    }
+
+    90% {
+        fill: #08fb6e;
+    }
+
+    100% {
+        fill: #00dffe;
+    }
+}*/
 
 
 
@@ -298,20 +390,35 @@ i.fas.fa-play.dropdown-arrow {
     }
 }
 
+#newTask {
+    cursor: pointer;
+    color: #794cff;
+    transition: all 0.2s ease-in;
+}
+#newTask:hover {
+    color: #4c20ff;
+    transition: all 0.2s ease-in;
+}
+
+#cancelTask {
+    cursor: pointer;
+    color: #fd018d;
+    transition: all 0.2s ease-in;
+}
+#cancelTask:hover {
+    color: #d40047;
+    transition: all 0.2s ease-in;
+}
+
 .createColumn_neworcancelButton {
     background: none;
     border: none;
     align-self: flex-end;
     text-align: center;
     outline: none;
-    color: #fd018d;
     transition: all 0.2s ease-out;
 }
 
-.createColumn_neworcancelButton:hover {
-    color: #d40047;
-    transition: all 0.2s ease-in;
-}
 @media only screen and (max-width: 575px) {
     .createColumn_neworcancelButton {
         text-align: center;
@@ -357,58 +464,78 @@ i.fas.fa-play.dropdown-arrow {
     padding: 1px 5px;
 }
 .tasknameColumn_inputName:focus {
-    outline-color: rgb(223, 255, 171);
-    outline-style: auto;
-    transition: outline-color 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 0px 1px 2px rgb(223, 255, 171);
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.00);
 }
 .tasknameColumn_inputName:hover {
-    outline-color: #949494;
-    outline-style: auto;
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 0px 1px 1px #9494946b;
+    outline: none;
 }
 .tasknameColumn_inputName:focus:hover {
-    outline-color: rgb(157, 255, 0);
-    outline-style: auto;
-    transition: outline-color 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 0px 1px 2px rgb(157, 255, 0);
+    outline: none;
+}
+.tasknameColumn_inputName::selection {
+    background: rgb(220, 255, 0);
 }
 
-.menubar_saveColumn {
-    width: 18%;
+.saveOrApplyColumn {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     margin: 0px 10px 0px 10px;
 }
 
-.saveColumn_button {
+.saveOrApplyButton {
     background-image: radial-gradient(rgb(19,255,85) 24%, rgb(0,255,243) 77%);
     border-radius: 50px;
     border: none;
-    box-shadow: 3px 3px 4px rgba(0,0,0,.10), -3px -3px 4px rgba(255,255,255,.90);
+    box-shadow: 3px 3px 4px rgba(0,0,0,.10), -3px -3px 4px rgba(255,255,255,.90), 0px 0px 2px 4px rgba(80,80,80,0.1);
     text-transform: uppercase;
     font-weight: 700;
     color: white;
     width: 70px;
     height: 32px;
     position: relative;
-    left: -20%;
     transition: all 0.3s ease-in;
-}
-.saveColumn_button:active {
     outline: none;
 }
-.saveColumn_button:focus {
+@media only screen and (max-width: 575px) {
+    .saveOrApplyButton {
+        left: 0%;
+    }
+}
+
+.saveOrApplyButton:active {
+    outline: none;
+}
+.saveOrApplyButton:focus {
     outline: none;
     /*background-image: radial-gradient(rgb(0,255,243) 24%, rgb(19,255,85) 77%);
 transition: all 0.3s ease;*/
     /*box-shadow: inset 2px 2px 1px rgba(53, 111, 73, 0.1), inset -2px -2px 1px rgb(136, 255, 244);
 background--blend-mode: normal;*/
 }
-.saveColumn_button:focus:not(:hover) {
+.saveOrApplyButton:focus:not(:hover) {
     border: none;
 }
-.saveColumn_button:hover {
+.saveOrApplyButton:hover {
     transition: all 0.3s ease-in;
-    box-shadow: -3px 3px 4px rgba(0,0,0,.10), 3px -3px 4px rgba(255,255,255,1);
+    box-shadow: -3px 3px 4px rgba(0,0,0,.10), 3px -3px 4px rgba(255,255,255,1), 0px 0px 2px 4px rgba(80,80,80,0.1);
+}
+
+.menubar_applyColumn {
+    justify-content: flex-end;
+}
+@media only screen and (max-width: 575px) {
+    .menubar_applyColumn {
+        width: auto;
+        margin: 10px 0px 10px 0px;
+    }
 }
 
 .menubar_tasklistColumn {
@@ -479,6 +606,9 @@ background--blend-mode: normal;*/
     height: 30px;
     align-self: center;
     outline: none;
+}
+.taskSelection::selection {
+    background: rgb(220, 255, 0);
 }
 
 .taskArrow {
@@ -562,6 +692,9 @@ background--blend-mode: normal;*/
     margin: 0px 0px 0px 10px;
     outline: none;
 }
+.subSelection::selection {
+    background: rgb(220, 255, 0);
+}
 
 .subArrow {
     font-size: 38px;
@@ -592,6 +725,7 @@ background--blend-mode: normal;*/
     flex-direction: row;
     margin: 20px;
     align-items: center;
+    overflow: hidden;
 }
 
 .rule_select {
@@ -606,13 +740,13 @@ background--blend-mode: normal;*/
 .rule_body {
     display: flex;
     background: #FFFFFF;
-    border-radius: 10px;
     width: 100%;
     height: 68px;
     border-radius: 10px;
     align-items: center;
     padding: 15px 24px 15px 24px;
     margin-left: 20px;
+    overflow-x: scroll;
 }
 
 .rule_set {
@@ -637,6 +771,10 @@ background--blend-mode: normal;*/
     font-size: 18px;
     text-align: center;
     display: inline-flex;
+    outline: none;
+}
+.fieldName::selection {
+    background: rgb(220, 255, 0);
 }
 
 .fieldCondition {
@@ -713,3 +851,107 @@ background--blend-mode: normal;*/
 
 /* SUBSCRIPTION PAGE
 --------------------------------------------------- */
+.subscriberFieldLabel {
+    display: flex;
+    position: relative;
+    font-family: 'Segoe UI';
+    font-weight: 300;
+    font-size: 18px;
+    color: #848484;
+}
+@media only screen and (max-width: 575px) {
+    .subscriberFieldLabel {
+        align-self: flex-start;
+    }
+}
+
+.subscriberFieldTextbox {
+    border-radius: 10px;
+    border: none;
+    height: 38px;
+    min-width: 130px;
+    max-width: 300px;
+    background-color: #F6F6F6;
+    padding: 5px 15px 5px 15px;
+    margin: 0px 18px 0px 18px;
+    font-family: 'Segoe UI';
+    font-size: 18px;
+    text-align: center;
+    display: inline-flex;
+}
+.subscriberFieldTextbox:focus {
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 0px 1px 2px rgb(223, 255, 171);
+    outline: none;
+}
+.subscriberFieldTextbox:hover {
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 0px 1px 1px #949494;
+    outline: none;
+}
+.subscriberFieldTextbox:focus:hover {
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0px 0px 1px 2px rgb(157, 255, 0);
+    outline: none;
+}
+@media only screen and (max-width: 575px) {
+    .subscriberFieldTextbox {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+.entryFields {
+    background: white;
+    display: flex;
+    border-radius: 10px;
+    height: auto;
+    align-items: center;
+    padding: 20px;
+    margin: 20px;
+    justify-content: center;
+}
+@media only screen and (max-width: 575px) {
+    .entryFields {
+        flex-direction: column;
+    }
+}
+
+.baseboard_subscriberNote {
+    font-size: 18px;
+    display: flex;
+    align-self: center;
+    margin-top: 20px;
+    width: 50%;
+    text-align: center;
+}
+
+
+
+/* HOME
+--------------------------------------------------- */
+.bg {
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.bg::before {
+    background-image: url("../icon.png");
+    background-size: cover;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    opacity: 0.4;
+}

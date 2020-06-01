@@ -33,31 +33,35 @@ namespace Aurora
 		{
 			Configuration = configuration;
 
+			
+			InitialGeodataFetch();
+
 			/* DEMO START */
-			LaunchMockScenario();
+			StartDemo();
 			/**/
 		}
 		#endregion
 
 
 		#region Methods
-		/* DEMO TEMPLATE METHOD */
-		private async void LaunchMockScenario()
+
+		private async void InitialGeodataFetch()
 		{
-			// 1: Start initial pull of Geodata from MongoDB (Mocks the event that API will trigger to make a 'Get' to API)
 			Fetcher.Survey.Sites = await Fetcher.GetGeodataListAsync();
-			// 2: Create Mock Subscriptions and Task data (Mocks the reading of all Subscriptions in collection and all Tasks in collection)
+		}
+
+		/* DEMO TEMPLATE METHOD */
+		private void StartDemo()
+		{
 			Fetcher.DEMO_CREATEMOCKOBJECTS();
-			// 3: Call Change Stream for MongoDB that will execute Notifier if changes made
 			Tasker.Application_Start();
 		}
 		/**/
 
 
-		// This method gets called by the runtime. Use this method to add services to the container.
+		#region Configuation
 		public void ConfigureServices(IServiceCollection services) => services.AddRazorPages();
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment()) {
@@ -65,7 +69,6 @@ namespace Aurora
 			}
 			else {
 				app.UseExceptionHandler("/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
 
@@ -77,5 +80,6 @@ namespace Aurora
 		}
 		#endregion
 
+		#endregion
 	}
 }
