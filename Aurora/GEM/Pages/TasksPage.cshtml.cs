@@ -34,6 +34,3 @@ namespace GEM
 		}
 	}
 }
-
-// TODO: pass selection of user 'selected subscription' into currently selected Task's property as well as the 'selected rules' into it's property...
-// TODO: create submit button and any other buttons needed for Task menu...
