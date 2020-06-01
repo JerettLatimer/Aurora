@@ -81,7 +81,6 @@ function openMenu(el) {
 }
 
 function submitHandler() {
-    alert("submit handler entered");
     var selectedRules = $(".rule_select:checked").map(function () {
         return this.value;
     }).get();
