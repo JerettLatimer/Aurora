@@ -9,31 +9,31 @@ function RadioConditionCheck() {
             if (radio === document.getElementById("anyChnage")) {
                 console.log("inside anyChnage");
             }
-            //else if (radio.$('#isConditional')) {
-            //    $('.radioCondition').after(
-            //        <div className="dropdown">
-            //            <button className="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-            //                <span className="caret"></span>
-            //            </button>
-            //            <ul className="dropdown-menu">
-            //                <li><a href="#">HTML</a></li>
-            //                <li><a href="#">CSS</a></li>
-            //                <li><a href="#">JavaScript</a></li>
-            //            </ul>
-            //        </div>,
-            //        <input type="text"></input>
-            //    );
-            //}
-            //TasksPage.Test();
         }
     }
 }
 
-/*$(document).ready(function () {
-    $('.createColumn_neworcancelButton').click(function () {
-        
+
+
+/* Task and Subscription page 'Create New' text button */
+$(".cancel").hide();
+$(document).ready(function () {
+    $("#newTask").click(function () {
+        $(".createToggle").hide();
+        $(".menubar_applyColumn").hide();
+        $(".cancelToggle").show();
+        $(".menubar_tasknameColumn").show();
+        $(".menubar_saveColumn").show();
     });
-});*/
+    $("#cancelTask").click(function () {
+        $(".cancelToggle").hide();
+        $(".menubar_tasknameColumn").hide();
+        $(".menubar_saveColumn").hide();
+        $(".createToggle").show();
+        $(".menubar_applyColumn").show();
+    });
+});
+
 
 
 /* Rule checkbox toggle for show/hide of radio buttons */
@@ -46,6 +46,8 @@ function toggleConditions(prop) {
         $(".condition" + prop).hide(200);
     }
 };
+
+
 
 /* Custom Dropdowns */
 // Ref: https://codepen.io/hmps/pen/CbltK
@@ -80,8 +82,10 @@ function openMenu(el) {
     });
 }
 
+
+
+/* At Submit of Subscription page, this checks to see which rules were selected to stage for placement in Task SelectedRules property */
 function submitHandler() {
-    alert("submit handler entered");
     var selectedRules = $(".rule_select:checked").map(function () {
         return this.value;
     }).get();

@@ -17,16 +17,20 @@
 	<div class="task_menubar">
 
 		<div class="menubar_createColumn column">
-			<!--<input class="createColumn_neworcancelButton" id="newTask" type="button" name="createOrCancel" value="New Task" />-->
-			<input class="createColumn_neworcancelButton" id="cancelTask" type="button" name="createOrCancel" value="Cancel Task" />
+			<input class="createColumn_neworcancelButton createToggle" id="newTask" type="button" name="createOrCancel" value="New Task"/>
+			<input class="createColumn_neworcancelButton cancelToggle cancel" id="cancelTask" type="button" name="createOrCancel" value="Cancel Task"/>
 		</div>
 		<div class="newTaskParameters column">
-			<div class="menubar_tasknameColumn">
+			<div class="saveOrApplyColumn menubar_applyColumn">
+				<button class="saveOrApplyButton applyColumn_button" name="createOrCancel" type="submit" value="apply" onclick="submitHandler();">apply</button>
+				<input asp-for="Checkboxes" type="hidden" value="" id="input_hidden_field_arr" />
+			</div>
+			<div class="menubar_tasknameColumn cancel">
 				<span class="menubar_label">Task Name</span>
 				<input class="tasknameColumn_inputName" type="text" name="createOrCancel" value="" placeholder="" />
 			</div>
-			<div class="menubar_saveColumn">
-				<button class="saveColumn_button" name="createOrCancel" type="submit" value="save" onclick="submitHandler();">save</button>
+			<div class="saveOrApplyColumn menubar_saveColumn cancel">
+				<button class="saveOrApplyButton saveColumn_button" name="createOrCancel" type="submit" value="save" onclick="submitHandler();">save</button>
 				<input asp-for="Checkboxes" type="hidden" value="" id="input_hidden_field_arr" />
 			</div>
 		</div>

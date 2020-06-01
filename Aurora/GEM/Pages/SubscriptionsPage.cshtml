@@ -6,29 +6,31 @@
 }
 
 <h1 class="display-4">Subscriptions</h1>
-<p>You can subscribe to a selected <em>Subscription</em> profile here, receiving only alerts you care about.</p>
-<p>Here admins can fully manage all the <em>Subscriptions</em>.</p>
+<p>You can subscribe to a selected <em>Subscription</em> profile here, receiving only alerts you care about.<br>Here admins can fully manage all the <em>Subscriptions</em>.</p>
 
 
 <!-- SUBSCRIPTION MENUBAR -->
 <form method="post">
 	<div class="task_menubar">
 		<div class="menubar_createColumn column">
-			<!--<input class="createColumn_neworcancelButton" id="newSubscription" type="button" name="createOrCancel" value="New Subscription" />-->
-			<input class="createColumn_neworcancelButton" id="cancelTask" type="button" name="createOrCancel" value="Cancel Subscription" />
+			<input class="createColumn_neworcancelButton createToggle" id="newTask" type="button" name="createOrCancel" value="New Subscription" />
+			<input class="createColumn_neworcancelButton cancelToggle cancel" id="cancelTask" type="button" name="createOrCancel" value="Cancel Subscription" />
 		</div>
 		<div class="newTaskParameters column">
-			<div class="menubar_tasknameColumn">
+			<div class="saveOrApplyColumn menubar_applyColumn">
+				<button class="saveOrApplyButton applyColumn_button" name="createOrCancel" type="submit" value="apply" onclick="">apply</button>
+			</div>
+			<div class="menubar_tasknameColumn cancel">
 				<span class="menubar_label">Subscription Name</span>
 				<input class="tasknameColumn_inputName" type="text" name="createOrCancel" value="" placeholder="" />
 			</div>
-			<div class="menubar_saveColumn">
-				<button class="saveColumn_button" name="createOrCancel" type="button" value="save" onclick="">save</button>
+			<div class="saveOrApplyColumn menubar_saveColumn cancel">
+				<button class="saveOrApplyButton saveColumn_button" name="createOrCancel" type="button" value="save" onclick="">save</button>
 			</div>
 		</div>
 		<div class="menubar_tasklistColumn column">
 			<div class="tasklistColumn_container">
-				<span class="menubar_label">Load Subscription</span>
+				<span class="menubar_label">Subscriptions</span>
 				<div class="dropdownGem closed taskList">
 					<div class="dropdownGem-title" id="taskDropdownButton">
 						<input asp-for="GroupName" class="selection taskSelection" type="text" />
@@ -46,15 +48,18 @@
 		</div>
 
 	</div>
-	<div class="form-inline" id="subscription">
-		<label asp-for="FirstName">First Name:</label>
-		<input type="text" id="firstName" placeholder="Enter first name" name="firstName" />
-		<label asp-for="LastName">Last Name:</label>
-		<input type="text" id="lastName" placeholder="Enter last name" name="lastName" />
-		<label asp-for="Email">Email:</label>
-		<input type="email" id="email" placeholder="Enter email" name="email" />
-
-		<button id="submit" type="submit">Submit</button>
+	<div class="task_baseboard">
+		<span class="baseboard_subscriberNote">Select a subscription you want to subscribe to at the top right or create a new one at the top left. Select Apply or Save whenever you've entered your info.</span>
+		<div class="baseboard_nameEntry entryFields">
+			<label asp-for="FirstName" class="subscriberFieldLabel ">First Name</label>
+			<input class="subscriberFieldTextbox" type="text" name="firstName" />
+			<label asp-for="LastName" class="subscriberFieldLabel ">Last Name</label>
+			<input class="subscriberFieldTextbox" type="text" name="lastName" />
+		</div>
+		<div class="baseboard_emailEntry entryFields">
+			<label asp-for="Email" class="subscriberFieldLabel ">Email</label>
+			<input class="subscriberFieldTextbox" type="email" name="email" />
+		</div>
 	</div>
 </form>
 
