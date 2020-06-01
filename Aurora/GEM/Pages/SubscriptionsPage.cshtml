@@ -33,7 +33,7 @@
 				<span class="menubar_label">Subscriptions</span>
 				<div class="dropdownGem closed taskList">
 					<div class="dropdownGem-title" id="taskDropdownButton">
-						<input asp-for="GroupName" class="selection taskSelection" type="text" />
+						<input asp-for="GroupName" class="selection taskSelection" type="text" required/>
 						<i class="fas fa-play dropdown-arrow taskArrow"></i>
 					</div>
 					<div class="dropdownGem-menu">
@@ -52,14 +52,16 @@
 		<span class="baseboard_subscriberNote">Select a subscription you want to subscribe to at the top right or create a new one at the top left. Select Apply or Save whenever you've entered your info.</span>
 		<div class="baseboard_nameEntry entryFields">
 			<label asp-for="FirstName" class="subscriberFieldLabel ">First Name</label>
-			<input class="subscriberFieldTextbox" type="text" name="firstName" />
+			<input class="subscriberFieldTextbox" type="text" name="firstName" required/>
 			<label asp-for="LastName" class="subscriberFieldLabel ">Last Name</label>
-			<input class="subscriberFieldTextbox" type="text" name="lastName" />
+			<input class="subscriberFieldTextbox" type="text" name="lastName" required/>
 		</div>
+
 		<div class="baseboard_emailEntry entryFields">
 			<label asp-for="Email" class="subscriberFieldLabel ">Email</label>
-			<input class="subscriberFieldTextbox" type="email" name="email" />
+			<input class="subscriberFieldTextbox" type="email" name="email" required/>
 		</div>
+
 	</div>
 </form>
 

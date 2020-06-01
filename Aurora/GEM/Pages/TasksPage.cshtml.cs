@@ -10,15 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace GEM
 {
 	public class TasksPageModel : PageModel
 	{
+		[Required]
 		[BindProperty]
 		public string GroupName { get; set; }
+		[Required]
 		[BindProperty]
 		public string TaskName { get; set; }
+		[Required]
 		[BindProperty]
 		public string Checkboxes { get; set; }
 
@@ -30,6 +34,3 @@ namespace GEM
 		}
 	}
 }
-
-// TODO: pass selection of user 'selected subscription' into currently selected Task's property as well as the 'selected rules' into it's property...
-// TODO: create submit button and any other buttons needed for Task menu...
