@@ -22,7 +22,7 @@ namespace GEM.Model
 		#endregion
 
 		#region Constructor
-		public Site(Site clone)
+		protected Site(Site clone)
 		{
 			Sites = clone.Sites;
 			Properties = clone.Properties;
