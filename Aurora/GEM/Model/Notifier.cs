@@ -39,8 +39,11 @@ namespace GEM.Model
 				var oldSite = _task.OutdatedSurvey.Sites.Find(site => site.name == newSite.name);
 				foreach (string rule in _task.SelectedRules)
 				{
+					// TODO: Bug: Handle Edge Case for Location object, needs to compare against it's Coordinates properties
+
 					var outdatedData = oldSite.GetType().GetProperty(rule).GetValue(oldSite, null);
 					var updatedData = newSite.GetType().GetProperty(rule).GetValue(newSite, null);
+					
 
 					if (!outdatedData.Equals(updatedData))
 					{
