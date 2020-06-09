@@ -44,10 +44,6 @@ namespace GEM.Model
 				new Subscriber {
 					UserName = "Matthew Jett",
 					UserEmail = "seraphimecha@gmail.com"
-				},
-				new Subscriber {
-					UserName = "Forrest Wallace",
-					UserEmail= "forrestnwallace@gmail.com"
 				}
 			};
 			_DEMO_SUBSCRIPTIONS = new List<Subscription> {
