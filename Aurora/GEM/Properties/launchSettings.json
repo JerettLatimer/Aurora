@@ -11,7 +11,7 @@
     "GEM": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://aurora-microservices-gem.azurewebsites.net/"
+      "applicationUrl": "https://localhost:5001/"
     }
   }
 }
