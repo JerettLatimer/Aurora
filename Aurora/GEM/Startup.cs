@@ -35,10 +35,7 @@ namespace Aurora
 
 			
 			InitialGeodataFetch();
-
-			/* DEMO START */
-			StartDemo();
-			/**/
+			
 		}
 		#endregion
 
@@ -48,6 +45,9 @@ namespace Aurora
 		private async void InitialGeodataFetch()
 		{
 			Fetcher.Survey.Sites = await Fetcher.GetGeodataListAsync();
+			/* DEMO START */
+			StartDemo();
+			/**/
 		}
 
 		/* DEMO TEMPLATE METHOD */
