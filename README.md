@@ -2,7 +2,7 @@
 ![Logo](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/GEM.png)
 
 ## Description
-The GEM tool is a proof-of-concept web application that utilizes a custom ASP.NET Web API for database querying, MongoDB for geodata storage, and Microsoft Azure Clouse App Services to host the application. It's main function is to allow users to subscribe to recieve notificaitons based on changes that occur in the geodata produced by Cisco Grid Routers or CGRs. Users assign themselves to **Subscription Group** then create a **Task**, detailing the fields they wish to monitor. When the monitored field's data changes, an email notification is set out instantly to the subscribed group of users.
+The GEM tool is a proof-of-concept web application that utilizes a custom ASP.NET Web API for database querying, MongoDB for geodata storage, and Microsoft Azure Cloud App Services to host the application. It's main function is to allow users to subscribe to recieve notificaitons based on changes that occur in the geodata produced by Cisco Grid Routers or CGRs. Users assign themselves to **Subscription Group** then create a **Task**, detailing the fields they wish to monitor. When the monitored field's data changes, an email notification is set out instantly to the subscribed group of users.
 
 GEM was developed as a Senior Capstone project by a team of four using a Scrum development framework.
 
