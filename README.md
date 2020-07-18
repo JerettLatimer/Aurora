@@ -19,18 +19,18 @@ https://aurora-microservices-gem.azurewebsites.net/
 #### Example Run:
 
 * Home Page:
-![Home Image](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/HomePage.png)
+>![HomeImage](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/HomePage.png)
 
 * User navigates to the Task page. Here they create a Task, selecting the Subscription Group to be notified and the fields to be monitored for changes.
-![Task Image](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/Task.png)
+>![TaskImage](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/Task.png)
 
 * User then navigates to the Subscirption Page. Here they select a Subscription Group to be a part of and enter their name and email address.
-![Sub Image](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/Subscription.png)
+>![SubImage](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/Subscription.png)
 
 * The user is now registered for notifications. Once a change occurs in the status field, all users in the subscribed groups will recieve an email notification.
 
 **Email Notificaiton:**
-![Email Image](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/Email.png)
+>![Email Image](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/Email.png)
 
 **Live Map:**
-![Email Image](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/LiveMap.png)
+>![Email Image](https://github.com/JerettLatimer/Aurora/blob/master/DemoImages/LiveMap.png)
