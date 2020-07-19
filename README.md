@@ -13,8 +13,12 @@ GEM was developed as a Senior Capstone project by a team of four using a Scrum d
 * SRS Documentation
 
 ### Link to Live Site:
-
 https://aurora-microservices-gem.azurewebsites.net/
+
+### Supporting Documents:
+* [UML](https://github.com/JerettLatimer/Aurora/blob/master/GEM%20UML.pdf) (Download for best viewing experience)
+* [SRS](https://github.com/JerettLatimer/Aurora/blob/master/GEM%20SRS.pdf)
+* [Branching Strategy](https://github.com/JerettLatimer/Aurora/blob/master/Branching%20Strategy.png) (Download for best viewing experience)
 
 #### Example Run:
 
