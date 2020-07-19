@@ -7,9 +7,9 @@ The GEM tool is a proof-of-concept web application that utilizes a custom ASP.NE
 GEM was developed as a Senior Capstone project by a team of four using a Scrum development framework.
 
 **My major contributions include the following:** 
-* Web API Development and Integration (C#)
+* Web API Development and Integration (C#) [Link to API](https://github.com/JerettLatimer/Aurora/tree/master/Aurora/API)
 * Front End Development (HTML/CSS/JavaScript/JQuery)
-* Back End Development (C#)
+* Back End Development (C#) [Link to Pages](https://github.com/JerettLatimer/Aurora/tree/master/Aurora/GEM/Pages)
 * SRS Documentation
 
 ### Link to Live Site:
